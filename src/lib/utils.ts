@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { z } from "zod";
+import crypto from "crypto";
+import { unstable_noStore } from "next/cache";
 
 // Type | zod
 export enum AuthType {
@@ -142,3 +144,18 @@ export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
 };
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+export const wait = (duration: number) => {
+    return new Promise((res) => {
+        setTimeout(res, duration);
+    });
+};
+
+export const randomKeyGenerator = () => {
+    const key = crypto.randomBytes(32).toString("base64");
+
+    const base64url = key
+        .replace(/\+/g, "-") // Replace + with -
+        .replace(/\//g, "_") // Replace / with _
+        .replace(/=+$/, ""); // Remove padding =
+    return base64url;
+};

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,18 +21,17 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 
-import { unknown, z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/CustomInput";
-import { authFormSchema, AuthType } from "@/lib/utils";
+import { authFormSchema, AuthType, randomKeyGenerator } from "@/lib/utils";
 import { Store } from "lucide-react";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
 import { userAgent } from "next/server";
+import { useToast } from "@/hooks/use-toast";
 
 type LoginLogoutDialogProps = {
     type: AuthType;
@@ -46,28 +45,9 @@ const LoginLogoutDialog = ({
     type,
 }: LoginLogoutDialogProps) => {
     const authOperation = type === AuthType.SignIn ? signIn : signUp;
-    // const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const authOperationWrapper = async (state: any, formData: FormData) => {
-        try {
-            // Call the actual auth operation (signIn or signUp)
-            const result = await authOperation(state, formData);
-
-            // Update state with the result (handle success or errors)
-            return {
-                ...state,
-                errors: result?.errors || {},
-            };
-        } catch (error) {
-            return {
-                ...state,
-                errors: { global: ["An unexpected error occurred."] }, // Handle global errors
-            };
-        }
-    };
-
-    const [state, action, isPending] = useActionState(signIn, undefined);
-
+    const { toast } = useToast();
     const router = useRouter();
     const navigateBack = () => router.back();
 
@@ -83,36 +63,46 @@ const LoginLogoutDialog = ({
         },
     });
 
-    // async function onSubmit(data: z.infer<typeof formSchema>) {
-    //     setIsLoading(true);
+    async function onSubmit(data: z.infer<typeof formSchema>) {
+        setIsLoading(true);
 
-    //     const userData = {
-    //         name: data.name,
-    //         email: data.email,
-    //         username: data.username,
-    //         password: data.password,
-    //     };
+        const userData = {
+            name: data.name,
+            email: data.email,
+            username: data.username,
+            password: data.password,
+        };
 
-    //     try {
-    //         const result = await authOperation(userData);
-    //         if (result?.errors) {
-    //             console.log("errors: ", result.errors);
-    //         } else {
-    //             console.log("login successful");
-    //         }
-    //     } catch (error) {
-    //         console.log("An unexpected error occurred: ", error);
-    //         // Something went wrong. Check your connection and try again later.
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
+        try {
+            const result = await authOperation(userData);
+            if (result?.errors) {
+                if ("message" in result.errors) {
+                    toast({
+                        variant: "destructive",
+                        className: "font-bold",
+                        description: result.errors.message,
+                    });
+                }
+            } else {
+                console.log("login successful");
+            }
+        } catch (error) {
+            toast({
+                variant: "destructive",
+                className: "font-bold",
+                description:
+                    "Something went wrong. Check your connection and try again later.",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
         <div>
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent
-                    className="sm:max-w-[525px] "
+                    className="sm:max-w-[525px]  left"
                     onCloseAutoFocus={navigateBack}
                 >
                     <DialogHeader>
@@ -127,8 +117,8 @@ const LoginLogoutDialog = ({
                     </DialogHeader>
                     <Form {...form}>
                         <form
-                            // onSubmit={form.handleSubmit(onSubmit)}
-                            action={action}
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            // action={action}
                             className="space-y-8 mt-6 flex flex-col"
                         >
                             {type === AuthType.SignUp && (
@@ -169,7 +159,7 @@ const LoginLogoutDialog = ({
                                 placeholder="Password"
                             />
                             <Button
-                                disabled={isPending}
+                                disabled={isLoading}
                                 variant="outline"
                                 className="text-sky-600"
                                 type="submit"

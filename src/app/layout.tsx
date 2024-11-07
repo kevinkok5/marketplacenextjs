@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/theme-provider";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReactQueryClientProvider from "@/contexts/ReactQueryClientProvider";
+import ApolloProviderWrapper from "@/contexts/ApollowClientProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const ibmPlexSerif = IBM_Plex_Serif({
@@ -32,7 +36,12 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {children}
+                    <ReactQueryClientProvider>
+                        <ApolloProviderWrapper>
+                            {children}
+                            <Toaster />
+                        </ApolloProviderWrapper>
+                    </ReactQueryClientProvider>
                 </ThemeProvider>
             </body>
         </html>

@@ -1,56 +1,14 @@
-import CollapsibleSidebarListItems from "@/components/CollapsibleSidebarListItems";
 import SidebarLinkListItem from "@/components/SidebarLinkListItem";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { History, MessageSquare, MessageSquareText, X } from "lucide-react";
+import { History, Menu, MenuSquare, SquareMenuIcon, X } from "lucide-react";
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "@/features/user/lib/utils";
+import CollapsibleSidebarListItems from "@/components/CollapsibleSidebarListItems";
+import { Badge } from "@/components/ui/badge";
 
-export type ProductRightSideBarProps = {
-    user: Partial<User> | undefined;
-};
-
-const ProductRightSideBar: React.FC<ProductRightSideBarProps> = ({ user }) => {
+const Sidebar = () => {
     return (
         <div className="flex min-w-[22rem] max-md:hidden sticky top-12 !h-[calc(100dvh-48px)]">
-            <Separator orientation="vertical" />
-
-            <div className="w-full h-full px-2">
-                <div className=" px-3 flex flex-col">
-                    <div className="py-4 flex gap-3">
-                        <Avatar className="inline-flex w-16 h-16">
-                            <AvatarImage
-                                className="w-ful h-full object-cover"
-                                // src="https://github.com/shadcn.png"
-                                alt="@shadcn"
-                            />
-                            <AvatarFallback className="w-full h-full uppercase">
-                                {`${user?.username && user?.username[0]} ${
-                                    user?.lastName && user?.lastName[0]
-                                }`}
-                            </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col justify-center capitalize">
-                            <h2 className="">{`${user?.username} ${user?.lastName}`}</h2>
-                            <div className="flex text-xs">
-                                <span>⭐</span>
-                                <span>⭐</span>
-                                <span>⭐</span>
-                                <span>⭐</span>
-                                <span>⭐</span>
-                                (75)
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-xs pb-3">
-                        <div className="flex gap-1 items-center rounded-md py-[16px] px-4 h-6 bg-input w-fit">
-                            <MessageSquareText className="h-5" />
-                            Message
-                        </div>
-                    </div>
-                </div>
-                <Separator className="my-2" />
+            <div className="w-full h-full px-2 py-6">
                 <SidebarLinkListItem
                     label="Browse All"
                     active={true}
@@ -190,8 +148,9 @@ const ProductRightSideBar: React.FC<ProductRightSideBarProps> = ({ user }) => {
                     </div>
                 </CollapsibleSidebarListItems>
             </div>
+            <Separator orientation="vertical" />
         </div>
     );
 };
 
-export default ProductRightSideBar;
+export default Sidebar;

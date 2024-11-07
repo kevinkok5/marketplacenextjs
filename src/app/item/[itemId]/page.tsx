@@ -1,10 +1,26 @@
 "use client";
 import Carousel, { CarouselSettingsProps } from "@/components/Carousel";
-import { Settings } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProductDetails } from "@/features/product/lib/actions/product.actions";
+import ProductRightSideBar from "@/layouts/ProductRightSideBar";
 
-const page = () => {
+const page = ({ params }: { params: { itemId: string } }) => {
+    const router = useRouter();
+
+    const { itemId: id } = params;
+
+    console.log("item id : ", id);
+    const { data, error, isLoading } = useQuery({
+        queryKey: ["productDetails", id],
+        queryFn: () => fetchProductDetails(id),
+    });
+    if (error) {
+        console.log("erro: ", error);
+    } else console.log("data: ", data?.medias.edges);
+
     const [carouselActive, setCarouselActive] = useState<number>(0);
     const products = [
         {
@@ -46,7 +62,7 @@ const page = () => {
     ];
 
     const courselSetting: CarouselSettingsProps = {
-        itemsCount: products.length,
+        itemsCount: data?.medias?.edges ? data?.medias?.edges.length : 0,
         visibleItems: 1,
         startIndex: carouselActive,
         activeItemIndex: carouselActive,
@@ -54,51 +70,54 @@ const page = () => {
     };
 
     return (
-        <div className="h-full overflow-hidden w-full">
-            <div className="h-full flex flex-col w-full">
-                <Carousel className="flex-grow" settings={courselSetting}>
-                    {products.map((product, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className="w-full overflow-hidden mx-auto h-full !max-h-full"
-                            >
+        <>
+            <div className="h-full overflow-hidden w-full">
+                <div className="h-full flex flex-col w-full">
+                    <Carousel className="flex-grow" settings={courselSetting}>
+                        {data?.medias?.edges?.map((product, index) => {
+                            return (
                                 <div
                                     key={index}
-                                    className="w-fit !h-full m-auto"
+                                    className="w-full overflow-hidden mx-auto h-full !max-h-full"
                                 >
+                                    <div
+                                        key={index}
+                                        className="w-fit !h-full m-auto"
+                                    >
+                                        <Image
+                                            className="object-cover w-fit h-full max-h-full"
+                                            src={product.node.media}
+                                            alt="image"
+                                            width="1200"
+                                            height="991"
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </Carousel>
+                    <div className="flex h-fit p-3 gap-4 justify-center w-full">
+                        {/* <dflex> */}
+                        {data?.medias?.edges?.map((product, index) => {
+                            return (
+                                <div className="w-12 rounded-sm bg-red-500 aspect-square">
                                     <Image
-                                        className="object-cover w-fit h-full max-h-full"
-                                        src={product.imageUrl}
+                                        className="object-cover h-full rounded-sm w-full max-h-full min-h-full"
+                                        src={product.node.media}
                                         alt="image"
-                                        width="1200"
-                                        height="991"
+                                        width="600"
+                                        height="400"
+                                        onClick={() => setCarouselActive(index)}
                                     />
                                 </div>
-                            </div>
-                        );
-                    })}
-                </Carousel>
-                <div className="flex h-fit p-3 gap-4 justify-center w-full">
-                    {/* <dflex> */}
-                    {products.map((product, index) => {
-                        return (
-                            <div className="w-12 rounded-sm bg-red-500 aspect-square">
-                                <Image
-                                    className="object-cover h-full rounded-sm w-full max-h-full min-h-full"
-                                    src={product.imageUrl}
-                                    alt="image"
-                                    width="600"
-                                    height="400"
-                                    onClick={() => setCarouselActive(index)}
-                                />
-                            </div>
-                        );
-                    })}
-                    {/* </dflex> */}
+                            );
+                        })}
+                        {/* </dflex> */}
+                    </div>
                 </div>
             </div>
-        </div>
+            <ProductRightSideBar user={data?.owner} />
+        </>
     );
 };
 

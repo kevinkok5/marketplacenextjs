@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
+import Profile from "@/features/user";
 
 const Navbar = () => {
     return (
@@ -33,7 +34,7 @@ const Navbar = () => {
 
                     <Separator className="mx-4" orientation="vertical" />
                     <div className="create w-fit">
-                        <Link href="/create">
+                        <Link href="/manage/create">
                             <Button
                                 size="sm"
                                 className="lg:text-xs !text-white font-light !bg-sky-600"
@@ -93,22 +94,7 @@ const Navbar = () => {
                     </div>
                     <Separator className="mx-4" orientation="vertical" />
 
-                    <div className="user flex gap-2 items-center">
-                        <Link href="/">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage
-                                    // src="https://github.com/shadcn.png"
-                                    alt="@shadcn"
-                                />
-                                <AvatarFallback>k</AvatarFallback>
-                            </Avatar>
-                        </Link>
-
-                        <div className="flex items-center gap-1">
-                            <p>User</p>
-                            <ModeToggle />
-                        </div>
-                    </div>
+                    <Profile />
                 </div>
             </nav>
         </div>

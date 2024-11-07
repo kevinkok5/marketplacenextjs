@@ -6,6 +6,7 @@ const page = () => {
         <div>
             <section className="flex">
                 <Sidebar />
+                rental
             </section>
         </div>
     );

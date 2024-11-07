@@ -16,7 +16,6 @@ export default async function RootLayout({
             <Navbar />
             <section className="flex max-h-full overflow-hidden flex-grow">
                 {children}
-                <ProductRightSideBar />
             </section>
         </main>
     );
