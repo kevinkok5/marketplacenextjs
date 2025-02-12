@@ -11,6 +11,7 @@ export const GET_ME = gql`
             isActive
             isStaff
             isSuperuser
+            isShopOwner
             dateJoined
             lastLogin
         }

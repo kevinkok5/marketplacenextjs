@@ -33,7 +33,7 @@ const Navbar = () => {
                     </Link>
 
                     <Separator className="mx-4" orientation="vertical" />
-                    <div className="create w-fit">
+                    {/* <div className="create w-fit">
                         <Link href="/manage/create">
                             <Button
                                 size="sm"
@@ -42,7 +42,7 @@ const Navbar = () => {
                                 Create
                             </Button>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="nav_right flex items-center">
                     <div className="relative">

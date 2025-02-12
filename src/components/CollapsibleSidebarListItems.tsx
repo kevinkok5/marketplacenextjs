@@ -11,16 +11,25 @@ type CollapsibleSidebarListItems = {
     icon: React.ReactElement;
     label: string;
     children?: React.ReactNode;
+    defaultValue?: string;
+    value?: string;
 };
 
 const CollapsibleSidebarListItems: React.FC<CollapsibleSidebarListItems> = ({
     children,
     icon,
     label,
+    defaultValue,
+    value = "item-1",
 }) => {
     return (
-        <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1" className="border-none">
+        <Accordion
+            type="single"
+            defaultValue={defaultValue}
+            collapsible
+            className="w-full"
+        >
+            <AccordionItem value={value} className="border-none">
                 <AccordionTrigger className="flex px-3 py-3 gap-2 text-sm hover:no-underline rounded-sm items-center transition duration-200 ease-out  hover:bg-input font-light">
                     <div className="flex gap-2 items-center">
                         {icon}

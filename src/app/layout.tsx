@@ -6,6 +6,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryClientProvider from "@/contexts/ReactQueryClientProvider";
 import ApolloProviderWrapper from "@/contexts/ApollowClientProvider";
+import RouteChangeProgressBar from "@/components/RouteChangeProgressBar";
+import "nprogress/nprogress.css";
+import NProgress from "nprogress";
+// import Router from "next/router";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const ibmPlexSerif = IBM_Plex_Serif({
@@ -21,6 +25,16 @@ export const metadata: Metadata = {
         icon: "/icons/logo.svg",
     },
 };
+
+// Router.events.on("routeChangeStart", () => NProgress.start());
+// Router.events.on("routeChangeComplete", () => {
+//     NProgress.done();
+//     NProgress.remove();
+// });
+// Router.events.on("routeChangeError", () => {
+//     NProgress.done();
+//     NProgress.remove();
+// });
 
 export default function RootLayout({
     children,
@@ -38,6 +52,7 @@ export default function RootLayout({
                 >
                     <ReactQueryClientProvider>
                         <ApolloProviderWrapper>
+                            <RouteChangeProgressBar />
                             {children}
                             <Toaster />
                         </ApolloProviderWrapper>

@@ -2,7 +2,6 @@
 
 import "server-only";
 import { JWTPayload, SignJWT, jwtVerify } from "jose";
-import { JwtPayload } from "jwt-decode";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

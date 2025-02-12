@@ -7,11 +7,13 @@ import React, { useState } from "react";
 const page = () => {
     const [open, setOpen] = useState(true);
     return (
-        <LoginLogoutPopUp
-            type={AuthType.SignIn}
-            open={open}
-            onOpenChange={setOpen}
-        />
+        <>
+            <LoginLogoutPopUp
+                type={AuthType.SignIn}
+                open={open}
+                onOpenChange={setOpen}
+            />
+        </>
     );
 };
 

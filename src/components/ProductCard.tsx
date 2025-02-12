@@ -1,4 +1,4 @@
-import { ProductEdge } from "@/features/product/lib/utils";
+import { ProductEdge } from "@/features/manageProducts/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

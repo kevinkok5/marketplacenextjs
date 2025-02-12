@@ -4,7 +4,12 @@ const nextConfig = {
     pageExtensions: ["mdx", "tsx", "ts"],
 
     images: {
-        domains: ["images.unsplash.com", "i.pinimg.com", "127.0.0.1"],
+        domains: [
+            "images.unsplash.com",
+            "i.pinimg.com",
+            "127.0.0.1",
+            "github.com",
+        ],
     },
 };
 

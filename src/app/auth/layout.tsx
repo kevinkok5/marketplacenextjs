@@ -1,11 +1,12 @@
 import ButtonLoading from "@/components/ButtonLoading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getUser } from "@/features/user/lib/actions/user.actions";
 import Navbar from "@/layouts/Navbar";
 import Sidebar from "@/layouts/Sidebar";
 import { Store } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import React from "react";
 
@@ -14,9 +15,9 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // const loggedIn = await getLoggedInUser();
-    // if (!loggedIn) redirect("/sign-in");
-
+    const loggedIn = await getUser();
+    console.log("loggedIn: ", loggedIn);
+    if (loggedIn.success !== false) redirect("/");
     return (
         <main className="min-h-dvh ">
             <div className="h-screen flex">

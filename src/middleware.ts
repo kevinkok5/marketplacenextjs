@@ -12,10 +12,12 @@ export default async function middleware(req: NextRequest) {
         return NextResponse.next();
     }
     const cookie = cookies().get("session")?.value;
-    const session = await decrypt(cookie);
+    const session = cookie ? await decrypt(cookie) : null;
     // console.log(session);
 
     if (!session?.token) {
+        // return NextResponse.next();
+
         return NextResponse.redirect(new URL("/auth", req.nextUrl));
     }
 
@@ -37,7 +39,7 @@ export default async function middleware(req: NextRequest) {
 
             console.log("INFO: End refresh tokens");
 
-            const response = NextResponse.redirect(new URL(req.url));
+            const response = NextResponse.redirect(new URL(req.nextUrl));
 
             const expires = new Date(Date.now() + cookie.duration);
             const newSession = await encrypt({ token, expires });
@@ -51,6 +53,10 @@ export default async function middleware(req: NextRequest) {
             });
             return response;
         } catch (error) {}
+    }
+
+    if (currentPath === "/manage") {
+        return NextResponse.redirect(new URL("/manage/me", req.nextUrl));
     }
 
     // Proceed with the request

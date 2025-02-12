@@ -13,10 +13,9 @@ export const getUser = async () => {
             fetchPolicy: "network-only", // Ensures fresh data
         });
 
-        // if (!data || !data.me) {
-        //     throw new Error("User data not found");
-        // }
-        console.log("me: ", data);
+        if (!data || !data.me) {
+            throw new Error("User data not found");
+        }
         return data.me;
     } catch (error) {
         // Step 5: Handle GraphQL and network errors

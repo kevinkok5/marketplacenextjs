@@ -6,6 +6,7 @@ export type User = {
     isActive: boolean;
     isStaff: boolean;
     isSuperuser: boolean;
+    isShopOwner: boolean;
     lastLogin: string;
     username: string;
     dateJoined: string;

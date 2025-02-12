@@ -31,7 +31,7 @@ const SidbarLinkListItem = ({
         <Link href={href}>
             <div
                 className={cn(
-                    "flex px-3 py-3 gap-2 text-sm rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light",
+                    "flex px-3 py-3 gap-4 text-sm rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light",
                     {
                         "bg-input": active,
                     },

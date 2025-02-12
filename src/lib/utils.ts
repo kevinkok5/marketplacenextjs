@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { z } from "zod";
 import crypto from "crypto";
 import { unstable_noStore } from "next/cache";
+import { NextRequest } from "next/server";
 
 // Type | zod
 export enum AuthType {
@@ -21,6 +22,7 @@ export const authFormSchema = (
     email: z.ZodString | z.ZodOptional<z.ZodTypeAny>;
     username: z.ZodString;
     password: z.ZodString;
+    confirmPassword: z.ZodString | z.ZodOptional<z.ZodString>;
 }> => {
     if (type !== AuthType.SignIn && type !== AuthType.SignUp) {
         throw new CustomError("Invalid type provided");
@@ -64,6 +66,12 @@ export const authFormSchema = (
         password: z.string().min(8, {
             message: "password must be at least 8 characters",
         }),
+        confirmPassword:
+            type === AuthType.SignIn
+                ? z.string().min(8).optional()
+                : z.string().min(8, {
+                      message: "password must be at least 8 characters",
+                  }),
     });
 };
 
@@ -75,8 +83,8 @@ export type fetchOptions = {
     body: string;
 };
 export type apiData = {
-    data: any;
-    error: any;
+    data?: any;
+    errors: any;
 };
 
 export function cn(...inputs: ClassValue[]) {
@@ -106,6 +114,8 @@ export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
         data: [],
         error: null,
     };
+
+    console.log("Fetching data: ", fetchOptions.body);
 
     try {
         const response = await fetch(url, fetchOptions);
@@ -159,3 +169,29 @@ export const randomKeyGenerator = () => {
         .replace(/=+$/, ""); // Remove padding =
     return base64url;
 };
+
+export type DeepPartial<T> = T extends object
+    ? {
+          [P in keyof T]?: DeepPartial<T[P]>;
+      }
+    : T;
+
+export const customCapitalize = (value: string) =>
+    value[0].toUpperCase() + value.slice(1).toLowerCase();
+
+export function getAbsoluteUrl(
+    path: string,
+    req: NextRequest | null = null
+): string {
+    if (typeof window !== "undefined") {
+        // Running in the browser
+        const baseUrl = `${window.location.protocol}//${window.location.host}`;
+        return `${baseUrl}${path}`;
+    } else if (req) {
+        // Running on the server
+        const protocol = req.headers.get("x-forwarded-proto") || "http";
+        const host = req.headers.get("host") || "localhost"; // Default to "localhost" if host is not set
+        return `${protocol}://${host}${path}`;
+    }
+    return ""; // Default case if neither environment is matched
+}

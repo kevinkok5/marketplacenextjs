@@ -6,6 +6,7 @@ import { fetchData, fetchOptions } from "./utils";
 import { createSession, decrypt, verifySession } from "./session";
 import { cookies } from "next/headers";
 import { unstable_noStore } from "next/cache";
+import { decryptStore } from "@/features/manageStore/lib/storeSession";
 
 const baseURL = process.env.API_BASE_URL;
 
@@ -61,9 +62,26 @@ export const getAccessToken = async () => {
         if (!(await isTokenExpired(access))) {
             accessToken = access;
         } else {
-            // console.log("Access token expired");
+            console.log("Access token expired");
             accessToken = await refreshToken(refresh);
         }
     }
-    return accessToken;
+    return accessToken; // returning null if no access token found
+};
+
+export const getStoreSession = async () => {
+    // This function reads the Store_session from the cookie
+    // Decrypt the session using the decryptStore function
+    // and if there is a session it reads it and returns the shop id else return null
+
+    let storeId: string | null = null;
+
+    const cookie = cookies().get("Store-session")?.value;
+
+    const session = await decryptStore(cookie);
+    if (session && session.token?.token) {
+        const { id } = session.token.token;
+        storeId = id;
+    }
+    return storeId; // returning null if no session found
 };

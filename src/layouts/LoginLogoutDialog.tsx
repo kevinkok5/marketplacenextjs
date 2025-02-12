@@ -49,7 +49,12 @@ const LoginLogoutDialog = ({
 
     const { toast } = useToast();
     const router = useRouter();
-    const navigateBack = () => router.back();
+
+    const navigateBack = (isOpen: boolean) => {
+        onOpenChange(isOpen);
+        if (!isOpen) router.back(); // Go back only if dialog closes
+    };
+    // const navigateBack = () => {};
 
     const formSchema = authFormSchema(type);
 
@@ -60,6 +65,7 @@ const LoginLogoutDialog = ({
             email: type === AuthType.SignUp ? "" : undefined, // only for SignUp
             username: "",
             password: "",
+            confirmPassword: type === AuthType.SignUp ? "" : undefined, // only for SignUp,
         },
     });
 
@@ -71,10 +77,12 @@ const LoginLogoutDialog = ({
             email: data.email,
             username: data.username,
             password: data.password,
+            confirmPassword: data.confirmPassword,
         };
 
         try {
             const result = await authOperation(userData);
+            // console.log("result:", result);
             if (result?.errors) {
                 if ("message" in result.errors) {
                     toast({
@@ -93,9 +101,8 @@ const LoginLogoutDialog = ({
                 description:
                     "Something went wrong. Check your connection and try again later.",
             });
-        } finally {
-            setIsLoading(false);
         }
+        setIsLoading(false);
     }
 
     return (
@@ -103,7 +110,7 @@ const LoginLogoutDialog = ({
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent
                     className="sm:max-w-[525px]  left"
-                    onCloseAutoFocus={navigateBack}
+                    onCloseAutoFocus={() => navigateBack(open)}
                 >
                     <DialogHeader>
                         <DialogTitle>
@@ -119,7 +126,7 @@ const LoginLogoutDialog = ({
                         <form
                             onSubmit={form.handleSubmit(onSubmit)}
                             // action={action}
-                            className="space-y-8 mt-6 flex flex-col"
+                            className="space-y-4 mt-6 flex flex-col"
                         >
                             {type === AuthType.SignUp && (
                                 <>
@@ -158,6 +165,15 @@ const LoginLogoutDialog = ({
                                 label="Password"
                                 placeholder="Password"
                             />
+                            {type === AuthType.SignUp && (
+                                <CustomInput
+                                    control={form.control}
+                                    type="password"
+                                    name="confirmPassword"
+                                    label="Confirm Password"
+                                    placeholder="Password"
+                                />
+                            )}
                             <Button
                                 disabled={isLoading}
                                 variant="outline"

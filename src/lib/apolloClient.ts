@@ -4,32 +4,58 @@ import {
     InMemoryCache,
     HttpLink,
     NormalizedCacheObject,
+    ApolloLink,
 } from "@apollo/client";
 import { useMemo } from "react";
 import { setContext } from "@apollo/client/link/context";
-import { getAccessToken } from "./manageToken";
+import { RetryLink } from "@apollo/client/link/retry";
+import { getAccessToken, getStoreSession } from "./manageToken";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
 const createApolloClient = () => {
     const httpLink = new HttpLink({
-        uri: process.env.API_BASE_GRAPHQL_URL, // Your GraphQL endpoint
+        uri: process.env.NEXT_PUBLIC_API_BASE_GRAPHQL_URL, // Your GraphQL endpoint
+    });
+    const uploadLink = createUploadLink({
+        uri: process.env.NEXT_PUBLIC_API_BASE_GRAPHQL_URL, // Your GraphQL endpoint
     });
 
     // Optionally, add an authorization token to the headers
     const authLink = setContext(async (_, { headers }) => {
         const token = await getAccessToken();
+        const storeId = await getStoreSession();
+        // console.log("StoreId: ", storeId);
+
         return {
             headers: {
                 ...headers,
                 authorization: token ? `Bearer ${token}` : "",
+                "x-store-id": storeId || "",
             },
         };
     });
 
+    // // Retry Link
+    const retryLink = new RetryLink({
+        delay: {
+            initial: 300,
+            max: Infinity,
+            jitter: true,
+        },
+        attempts: {
+            max: 5,
+            retryIf: (error, _operation) => !!error,
+        },
+    });
+
+    const link = ApolloLink.from([authLink, retryLink, uploadLink, httpLink]);
+    // const link = ApolloLink.from([authLink, retryLink, httpLink]);
+
     return new ApolloClient({
         ssrMode: typeof window === "undefined", // Set to true for SSR
-        link: authLink.concat(httpLink), // Combine auth link with HTTP link
+        link, // Combine auth link with HTTP link
         cache: new InMemoryCache(),
     });
 };

@@ -14,7 +14,7 @@ export default async function RootLayout({
     return (
         <main className="max-h-dvh flex flex-col h-dvh">
             <Navbar />
-            <section className="flex max-h-full overflow-hidden flex-grow">
+            <section className="flex max-md:flex-col md:max-h-full md:overflow-hidden md:flex-grow ">
                 {children}
             </section>
         </main>
