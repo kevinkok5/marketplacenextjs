@@ -3,12 +3,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/contexts/theme-provider";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryClientProvider from "@/contexts/ReactQueryClientProvider";
 import ApolloProviderWrapper from "@/contexts/ApollowClientProvider";
 import RouteChangeProgressBar from "@/components/RouteChangeProgressBar";
 import "nprogress/nprogress.css";
-import NProgress from "nprogress";
 // import Router from "next/router";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

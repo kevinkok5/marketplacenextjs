@@ -4,7 +4,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import SidbarLinkListItem from "./SidebarLinkListItem";
 import { ChevronDown } from "lucide-react";
 
 type CollapsibleSidebarListItems = {

@@ -1,13 +1,14 @@
-import Link from "next/link";
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { getUser } from "@/features/user/lib/actions/user.actions";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import NavigateBack from "@/components/NavigateBack";
-import { join } from "@/features/manageStore/lib/actions/store.actions";
-import ConfirmJoinBtn from "@/features/manageStore/join/components/ConfirmJoinBtn";
 
-const page = async () => {
+const NavigateBack = lazy(() => import("@/components/NavigateBack"));
+const ConfirmJoinBtn = lazy(
+    () => import("@/features/manageStore/join/components/ConfirmJoinBtn")
+);
+
+const Page = async () => {
     const user = await getUser();
     if (user && user.isShopOwner) redirect("/store");
 
@@ -21,11 +22,13 @@ const page = async () => {
                 <NavigateBack>
                     <Button>Cancel</Button>
                 </NavigateBack>
-                <ConfirmJoinBtn />
+                <Suspense>
+                    <ConfirmJoinBtn />
+                </Suspense>
             </div>
         </section>
         // </div>
     );
 };
 
-export default page;
+export default Page;

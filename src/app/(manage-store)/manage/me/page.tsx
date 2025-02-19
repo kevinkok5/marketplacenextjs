@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
     return (
         <section className="w-full min-h-full columns-3 gap-4 overflow-x-auto px-8 py-12">
             <div className="break-inside-avoid gap-8 flex flex-col mb-4 border px-4 py-6 bg-neutral-950 border-neutral-800 h-fit min-w-[18rem] max-w-full rounded-2xl">
@@ -30,7 +30,7 @@ const page = () => {
                                     <Image
                                         width={60}
                                         height={60}
-                                        src="https://github.com/shadcn.png"
+                                        src=""
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
@@ -64,7 +64,7 @@ const page = () => {
                                     <Image
                                         width={60}
                                         height={60}
-                                        src="https://github.com/shadcn.png"
+                                        src=""
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
@@ -98,7 +98,7 @@ const page = () => {
                                     <Image
                                         width={60}
                                         height={60}
-                                        src="https://github.com/shadcn.png"
+                                        src=""
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
@@ -127,7 +127,7 @@ const page = () => {
                             </div>
                         </li>
                     </ul>
-                    <Link href="#">
+                    <Link href="/">
                         <div className="font-semibold hover:underline pt-8 pb-6 mx-auto text-center">
                             View More...
                         </div>
@@ -281,7 +281,7 @@ const page = () => {
                     </li>
                 </ul>
 
-                <Link href="#">
+                <Link href="/">
                     <div className="font-semibold hover:underline pt-8 pb-6 mx-auto text-center">
                         View More...
                     </div>
@@ -326,7 +326,7 @@ const page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src="https://github.com/shadcn.png"
+                                src=""
                                 alt="@shadcn"
                             />
                         </div>
@@ -334,10 +334,7 @@ const page = () => {
                     <li className="w-full grid gap-3 grid-flow-col">
                         <div className="flex gap-3">
                             <Avatar className="w-8 h-8">
-                                <AvatarImage
-                                    src="https://github.com/shadcn.png"
-                                    alt="@shadcn"
-                                />
+                                <AvatarImage src="" alt="@shadcn" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
 
@@ -363,7 +360,7 @@ const page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src="https://github.com/shadcn.png"
+                                src=""
                                 alt="@shadcn"
                             />
                         </div>
@@ -371,10 +368,7 @@ const page = () => {
                     <li className="w-full grid gap-3 grid-flow-col">
                         <div className="flex gap-3">
                             <Avatar className="w-8 h-8">
-                                <AvatarImage
-                                    src="https://github.com/shadcn.png"
-                                    alt="@shadcn"
-                                />
+                                <AvatarImage src="" alt="@shadcn" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
 
@@ -400,14 +394,14 @@ const page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src="https://github.com/shadcn.png"
+                                src=""
                                 alt="@shadcn"
                             />
                         </div>
                     </li>
                 </ul>
 
-                <Link href="#">
+                <Link href="/">
                     <div className="font-semibold hover:underline pt-8 pb-6 mx-auto text-center">
                         View More...
                     </div>
@@ -417,4 +411,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

@@ -6,11 +6,10 @@ export type CollapsibleItemCardProps = {
     name: string | undefined;
     productType: "ITEM";
 };
-const CollapsibleItemCard = ({
-    media,
-    name,
-    productType,
-}: CollapsibleItemCardProps) => {
+const CollapsibleItemCard = ({}: // media,
+// name,
+// productType,
+CollapsibleItemCardProps) => {
     return <div></div>;
 };
 

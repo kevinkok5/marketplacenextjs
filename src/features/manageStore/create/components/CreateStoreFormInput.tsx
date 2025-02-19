@@ -3,7 +3,6 @@ import React from "react";
 // import { Input } from "./ui/input";
 import { z } from "zod";
 import { Control, FieldPath } from "react-hook-form";
-import { authFormSchema, AuthType } from "@/lib/utils";
 import { createStoreSchema } from "@/features/manageStore/lib/utils";
 import {
     FormControl,

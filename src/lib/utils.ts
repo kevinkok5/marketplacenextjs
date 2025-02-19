@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { z } from "zod";
 import crypto from "crypto";
-import { unstable_noStore } from "next/cache";
 import { NextRequest } from "next/server";
 
 // Type | zod
@@ -112,10 +111,10 @@ export class CustomError extends Error {
 export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
     let apiData: apiData = {
         data: [],
-        error: null,
+        errors: null,
     };
 
-    console.log("Fetching data: ", fetchOptions.body);
+    // console.log("Fetching data: ", fetchOptions.body);
 
     try {
         const response = await fetch(url, fetchOptions);
@@ -124,7 +123,7 @@ export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
             console.error(errorData);
             return {
                 data: [],
-                error: {
+                errors: {
                     status: response.status,
                     message:
                         errorData.error ||
@@ -137,13 +136,13 @@ export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
         const responseData = await response.json();
         apiData = {
             data: responseData,
-            error: null,
+            errors: null,
         };
     } catch (error) {
         // Handle network or unexpected errors
         apiData = {
             data: [],
-            error: {
+            errors: {
                 status: 500,
                 message: "Network error. Please try again later.", // Generic network error message
             },

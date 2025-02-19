@@ -1,7 +1,3 @@
-import {
-    ItemColumns,
-    ItemColumnProps,
-} from "@/features/manageProducts/me/components/ItemColumns";
 import { ListingsDataTable } from "@/features/manageProducts/me/layout/ListingsDataTable";
 import React from "react";
 import {

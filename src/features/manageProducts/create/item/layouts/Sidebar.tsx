@@ -1,6 +1,6 @@
 import SidebarLinkListItem from "@/components/SidebarLinkListItem";
 import { Separator } from "@/components/ui/separator";
-import { History, Menu, MenuSquare, SquareMenuIcon, X } from "lucide-react";
+import { History, X } from "lucide-react";
 import React from "react";
 import CollapsibleSidebarListItems from "@/components/CollapsibleSidebarListItems";
 import { Badge } from "@/components/ui/badge";

@@ -1,18 +1,12 @@
-import { Separator } from "@/components/ui/separator";
 import OnClosePopUp from "@/features/manageProducts/create/components/OnClosePopUp";
-import Navbar from "@/layouts/Navbar";
-import Sidebar from "@/layouts/Sidebar";
-import { X } from "lucide-react";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Divide, X } from "lucide-react";
+import { Suspense } from "react";
 
 export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // const loggedIn = await getLoggedInUser();
-    // if (!loggedIn) redirect("/sign-in");
     return (
         <section className="absolute flex justify-center items-center top-0 left-0 flex-col min-h-screen w-screen z-[100]">
             <section className="relative bg-input w-[70%] min-w-[968px] h-[80vh] rounded-lg overflow-Y-auto overflow-x-hidden flex flex-col">
@@ -36,14 +30,22 @@ export default async function RootLayout({
                             public
                         </p>
                     </div>
-                    <OnClosePopUp className="p-1">
-                        <X className="w-4 h-4" />
-                    </OnClosePopUp>
+                    <Suspense fallback={<X className="w-4 h-4" />}>
+                        <OnClosePopUp className="p-1">
+                            <X className="w-4 h-4" />
+                        </OnClosePopUp>
+                    </Suspense>
                 </div>
                 {children}
             </section>
 
-            <OnClosePopUp className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></OnClosePopUp>
+            <Suspense
+                fallback={
+                    <div className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></div>
+                }
+            >
+                <OnClosePopUp className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></OnClosePopUp>
+            </Suspense>
         </section>
     );
 }

@@ -3,7 +3,7 @@
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { fetchData, fetchOptions } from "./utils";
-import { createSession, decrypt, verifySession } from "./session";
+import { decrypt } from "./session";
 import { cookies } from "next/headers";
 import { unstable_noStore } from "next/cache";
 import { decryptStore } from "@/features/manageStore/lib/storeSession";
@@ -31,7 +31,7 @@ export const refreshToken = async (
             fetchOptions
         );
 
-        if (token.error) {
+        if (token.errors) {
             console.error("token error");
             return null;
         }
@@ -62,7 +62,7 @@ export const getAccessToken = async () => {
         if (!(await isTokenExpired(access))) {
             accessToken = access;
         } else {
-            console.log("Access token expired");
+            // console.log("Access token expired");
             accessToken = await refreshToken(refresh);
         }
     }

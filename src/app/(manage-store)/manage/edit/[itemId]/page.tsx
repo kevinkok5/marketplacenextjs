@@ -1,8 +1,6 @@
 "use client";
 
-import ItemForm from "@/features/manageProducts/create/item/layouts/ItemForm";
 import ItemFormEdit from "@/features/manageProducts/create/item/layouts/ItemFormEdit";
-import Sidebar from "@/features/manageProducts/create/item/layouts/Sidebar";
 import {
     fetchAllItemCategories,
     fetchProductEdit,
@@ -13,10 +11,9 @@ import {
     ProductCategoryType,
 } from "@/features/manageProducts/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { ImagePlusIcon } from "lucide-react";
 import React from "react";
 
-const page = ({ params }: { params: { itemId: string } }) => {
+const Page = ({ params }: { params: { itemId: string } }) => {
     const {
         data: category,
         error: categoryError,
@@ -77,4 +74,4 @@ const page = ({ params }: { params: { itemId: string } }) => {
     );
 };
 
-export default page;
+export default Page;

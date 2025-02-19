@@ -2,11 +2,10 @@ import ButtonLoading from "@/components/ButtonLoading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getUser } from "@/features/user/lib/actions/user.actions";
-import Navbar from "@/layouts/Navbar";
-import Sidebar from "@/layouts/Sidebar";
 import { Store } from "lucide-react";
-import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
+// import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import React from "react";
 
@@ -15,9 +14,16 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const loggedIn = await getUser();
-    console.log("loggedIn: ", loggedIn);
-    if (loggedIn.success !== false) redirect("/");
+    let loggedIn = { success: false };
+    try {
+        loggedIn = await getUser();
+    } catch (error) {
+        if (isDynamicServerError(error)) {
+            throw error;
+        }
+    }
+    if (loggedIn?.success !== false) redirect("/");
+
     return (
         <main className="min-h-dvh ">
             <div className="h-screen flex">
@@ -36,14 +42,14 @@ export default async function RootLayout({
 
                     <div className="w-72 flex flex-col gap-2 font-bold">
                         <h3 className="text-xl">Join us Today</h3>
-                        <Button
+                        <ButtonLoading
+                            variant="outline"
                             className="!bg-sky-600 font-bold !text-white"
                             asChild
+                            href="/auth/signup"
                         >
-                            <Link href="/auth/signup" className="">
-                                Sign up
-                            </Link>
-                        </Button>
+                            Sign up
+                        </ButtonLoading>
                         <div className="flex gap-2 items-center">
                             <Separator className="w-auto flex-grow" /> or{" "}
                             <Separator className="flex-grow w-auto" />

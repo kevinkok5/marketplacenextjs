@@ -4,7 +4,7 @@ import LoginLogoutPopUp from "@/layouts/LoginLogoutDialog";
 import { AuthType } from "@/lib/utils";
 import React, { useState } from "react";
 
-const page = () => {
+const Page = () => {
     const [open, setOpen] = useState(true);
     return (
         <>
@@ -17,4 +17,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

@@ -1,12 +1,11 @@
-import { ModeToggle } from "@/components/ModeToggle";
-import React from "react";
+import React, { Suspense } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
-import Profile from "@/features/user";
+import Profile from "@/features/user/Profile";
+// import Profile from "@/features/user";
 
 const UserNavbar = () => {
     return (
@@ -93,8 +92,9 @@ const UserNavbar = () => {
                         </div>
                     </div>
                     <Separator className="mx-4" orientation="vertical" />
-
-                    <Profile />
+                    <Suspense fallback={<p>Loading profile...</p>}>
+                        <Profile />
+                    </Suspense>
                 </div>
             </nav>
         </div>

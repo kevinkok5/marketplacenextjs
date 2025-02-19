@@ -2,16 +2,9 @@
 // import { NextApiRequest, NextApiResponse } from "next";
 
 import { z } from "zod";
-import {
-    authFormSchema,
-    AuthType,
-    fetchData,
-    fetchOptions,
-    parseStringify,
-} from "../utils";
+import { authFormSchema, AuthType, fetchData, fetchOptions } from "../utils";
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "../session";
-import { deleteStoreSession } from "@/features/manageStore/lib/storeSession";
 import { cookies } from "next/headers";
 
 const baseURL = process.env.API_BASE_URL;
@@ -38,9 +31,9 @@ export const signIn = async (data: authProps) => {
 
     const token = await fetchData(`${baseURL}/token/`, fetchOptions);
 
-    if (token.error) {
+    if (token.errors) {
         return {
-            errors: { message: token.error.message as string }, // Return error message from server
+            errors: { message: token.errors.message as string }, // Return error message from server
         };
     }
 
@@ -52,8 +45,6 @@ export const signIn = async (data: authProps) => {
 };
 
 export const signUp = async (data: authProps) => {
-    console.log("yeah it me");
-
     const validatedData = authFormSchema(AuthType.SignUp).safeParse(data);
 
     if (!validatedData.success) {
@@ -85,9 +76,9 @@ export const signUp = async (data: authProps) => {
 
     const token = await fetchData(`${baseURL}/users/register/`, fetchOptions);
 
-    if (token.error) {
+    if (token.errors) {
         return {
-            errors: { message: token.error.message as string }, // Return error message from server
+            errors: { message: token.errors.message as string }, // Return error message from server
         };
     }
     await createSession(token?.data);
@@ -101,6 +92,7 @@ export const signOut = async () => {
     };
 
     cookies().delete(cookie.name);
+    cookies().delete("forAId");
 
     await deleteSession();
     return {

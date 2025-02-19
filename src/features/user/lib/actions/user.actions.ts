@@ -4,8 +4,9 @@ import { GET_ME } from "../queries";
 import { ApolloError } from "@apollo/client";
 
 export const getUser = async () => {
+    await verifySession();
+
     try {
-        await verifySession();
         const apolloClient = initializeApollo();
 
         const { data } = await apolloClient.query({

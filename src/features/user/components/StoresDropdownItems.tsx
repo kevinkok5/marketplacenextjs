@@ -5,7 +5,6 @@ import { createStoreSession } from "@/features/manageStore/lib/storeSession";
 import { StoreEdge, StorePayload } from "@/features/manageStore/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { AvatarFallback } from "@radix-ui/react-avatar";
-import { Loader2 } from "lucide-react";
 import React, { useState } from "react";
 
 type StoreProps = {

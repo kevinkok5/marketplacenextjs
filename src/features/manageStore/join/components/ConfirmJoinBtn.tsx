@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { join } from "../../lib/actions/store.actions";
 import { Button } from "@/components/ui/button";
-import { getUser } from "@/features/user/lib/actions/user.actions";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
 const ConfirmJoinBtn = () => {

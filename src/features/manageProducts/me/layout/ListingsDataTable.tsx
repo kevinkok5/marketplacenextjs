@@ -39,10 +39,10 @@ type ProductData = {
     // id: string;
     [key: string]: any;
 };
-type ProductRow = {
-    id: string;
-    [key: string]: any;
-};
+// type ProductRow = {
+//     id: string;
+//     [key: string]: any;
+// };
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];

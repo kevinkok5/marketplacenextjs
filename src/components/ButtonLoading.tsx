@@ -3,9 +3,8 @@
 
 import * as React from "react";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, ButtonProps } from "./ui/button";
-import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

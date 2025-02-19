@@ -1,25 +1,13 @@
 import {
     ChartNoAxesGantt,
     ChevronDown,
-    CirclePlus,
     Cloud,
-    CreditCard,
-    Github,
-    Keyboard,
-    LifeBuoy,
-    LogOut,
-    Mail,
-    MessageSquare,
     Plus,
-    PlusCircle,
     Settings,
     Store,
     User as UserIcon,
-    UserPlus,
-    Users,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -36,13 +24,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ModeToggle } from "@/components/ModeToggle";
-import { signOut } from "@/lib/actions/auth.actions";
 import React from "react";
-import { useToast } from "@/hooks/use-toast";
 import LogoutDropdownItem from "./LogoutDropdownItem";
 import { User } from "../lib/utils";
 import Link from "next/link";
-import { getStore } from "@/features/manageStore/lib/actions/store.actions";
+import { getUserStore } from "@/features/manageStore/lib/actions/store.actions";
 import { allStores } from "@/features/manageStore/lib/utils";
 import StoresDropdownItems from "./StoresDropdownItems";
 
@@ -55,7 +41,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div className="user rounded-sm flex gap-2 items-center hover:bg-neutral-800 p-1">
-                    <Avatar className="h-7 w-7 !bg-blue-700">
+                    <Avatar className="h-7 w-7">
                         <AvatarImage
                             // src="https://github.com/shadcn.png"
                             alt="@shadcn"
@@ -168,12 +154,12 @@ export const Item: React.FC<ItemProps> = ({ icon, label, children }) => {
     );
 };
 
-type Stores = {
-    allStores: allStores;
+type UserStores = {
+    allUserStores: allStores;
 };
 
 const StoresDropdown: React.FC = async () => {
-    const stores: Stores = await getStore();
+    const stores: UserStores = await getUserStore();
 
     return (
         <DropdownMenuSub>
@@ -186,9 +172,9 @@ const StoresDropdown: React.FC = async () => {
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
                 <DropdownMenuSubContent>
-                    {stores.allStores?.success && (
+                    {stores.allUserStores?.success && (
                         <StoresDropdownItems
-                            storeEdges={stores.allStores.edges}
+                            storeEdges={stores.allUserStores.edges}
                         />
                     )}
 

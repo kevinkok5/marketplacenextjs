@@ -22,7 +22,7 @@ export const CREATE_STORE_MUTATION = gql`
 
 export const GET_ALL_USER_STORE = gql`
     query getAllUsersStore {
-        allStores {
+        allUserStores {
             edges {
                 node {
                     id

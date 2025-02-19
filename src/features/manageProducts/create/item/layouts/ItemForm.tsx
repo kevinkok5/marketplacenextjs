@@ -9,7 +9,6 @@ import { Form } from "@/components/ui/form";
 import {
     createFormSchema,
     CreateFormSchemaProps,
-    ProductCategory,
     ProductCategoryType,
     productConditionObj,
     ProductConditionType,
@@ -99,15 +98,12 @@ const ItemForm = (data: ItemFormEditProps) => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("submit", values);
-
         setIsLoading(true);
 
         setFilesErrors({
             fileLength: null,
         });
         if (productStatus !== ProductStatus.Draft && files.length <= 0) {
-            console.log("error");
             setFilesErrors({
                 fileLength: "The product should at least have one image",
             });
@@ -117,7 +113,6 @@ const ItemForm = (data: ItemFormEditProps) => {
             status: productStatus,
             type: productType,
         });
-        console.log("values: ", values);
 
         try {
             const result = await storeProduct.createStoreProduct(
@@ -128,7 +123,6 @@ const ItemForm = (data: ItemFormEditProps) => {
 
             if (result?.errors) {
                 if ("message" in result.errors) {
-                    console.log("Error: ", result.errors);
                     toast({
                         variant: "destructive",
                         className: "font-bold",
@@ -143,7 +137,6 @@ const ItemForm = (data: ItemFormEditProps) => {
                 });
             }
         } catch (error) {
-            console.log("error:", error);
             toast({
                 variant: "destructive",
                 className: "font-bold",

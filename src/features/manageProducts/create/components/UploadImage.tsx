@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 export type UpoloadFilesErrors = {
@@ -58,8 +59,9 @@ const UploadImage = ({ files, setFiles, errors, setErrors }: uplaoadInput) => {
                     <div
                         className="border-neutral-600 border rounded-sm aspect-square flex flex-col items-center justify-center gap-4 text-[13px]"
                         onClick={() => {
-                            const uplaoadInput =
-                                document.querySelector("#uploadImage");
+                            const uplaoadInput = document.querySelector(
+                                "#uploadImage"
+                            ) as HTMLInputElement | null;
                             if (uplaoadInput) uplaoadInput.click();
                         }}
                     >
@@ -93,10 +95,12 @@ const UploadImage = ({ files, setFiles, errors, setErrors }: uplaoadInput) => {
                                 key={index}
                                 className="w-full aspect-square border dark:border-neutral-700"
                             >
-                                <img
+                                <Image
                                     src={imageUrl}
                                     alt=""
                                     className="w-full h-full object-cover"
+                                    width={300}
+                                    height={300}
                                 />
                             </div>
                         ))}
@@ -104,8 +108,9 @@ const UploadImage = ({ files, setFiles, errors, setErrors }: uplaoadInput) => {
                             <div
                                 className="w-full flex flex-col justify-center items-center aspect-square border dark:border-neutral-700"
                                 onClick={() => {
-                                    const uplaoadInput =
-                                        document.querySelector("#uploadImage");
+                                    const uplaoadInput = document.querySelector(
+                                        "#uploadImage"
+                                    ) as HTMLInputElement | null;
                                     if (uplaoadInput) uplaoadInput.click();
                                 }}
                             >
@@ -133,47 +138,39 @@ const UploadImage = ({ files, setFiles, errors, setErrors }: uplaoadInput) => {
                 id="uploadImage"
                 className="hidden"
                 onChange={(e) => {
-                    if (e.target.files && e.target.files.length > 0) {
-                        // Check if the number of files exceeds 10
+                    const selectedFiles = e.target.files;
+
+                    if (!selectedFiles || selectedFiles.length === 0) return;
+
+                    // Check if the number of files exceeds 10
+                    setErrors((prev) => ({
+                        ...prev,
+                        fileLength: null,
+                    }));
+
+                    if (
+                        selectedFiles.length > 10 ||
+                        selectedFiles.length + files.length > 10
+                    ) {
                         setErrors((prev) => ({
                             ...prev,
-                            fileLength: null,
+                            fileLength:
+                                "You can only upload a maximum of 10 files.",
                         }));
-                        if (
-                            e.target.files.length > 10 ||
-                            e.target.files.length + files.length > 10
-                        ) {
-                            setErrors((prev) => ({
-                                ...prev,
-                                fileLength:
-                                    "You can only upload a maximum of 10 files.",
-                            }));
-                            // Clear the input to prevent uploading more than 10 files
-                            e.target.value = "";
-                            return;
-                        }
-                        // Proceed with file upload
-                        console.log(e.target.files);
-
-                        setFiles((prevFiles) => {
-                            return !prevFiles || prevFiles == undefined
-                                ? [
-                                      ...Array.from(e.target.files).map(
-                                          (file) => ({
-                                              media: file,
-                                          })
-                                      ),
-                                  ]
-                                : [
-                                      ...prevFiles,
-                                      ...Array.from(e.target.files).map(
-                                          (file) => ({
-                                              media: file,
-                                          })
-                                      ),
-                                  ];
-                        });
+                        // Clear the input to prevent uploading more than 10 files
+                        e.target.value = "";
+                        return;
                     }
+
+                    // Proceed with file upload
+                    console.log(selectedFiles);
+
+                    setFiles((prevFiles) => [
+                        ...(prevFiles ?? []), // Ensure prevFiles is an array
+                        ...Array.from(selectedFiles).map((file) => ({
+                            media: file,
+                        })),
+                    ]);
                 }}
                 multiple
             />

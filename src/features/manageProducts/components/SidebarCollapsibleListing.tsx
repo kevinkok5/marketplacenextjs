@@ -9,7 +9,6 @@ import { fetchAllUserRecentProducts } from "../me/lib/actions/me.actions";
 import {
     HouseEdge,
     ItemEdge,
-    MediaEdge,
     MeidaType,
     ProductType,
     VehicleEdge,
@@ -30,8 +29,6 @@ const SidebarCollapsibleListing = () => {
         queryFn: fetchAllUserRecentProducts,
     });
 
-    console.log("Data:", data);
-
     const itemsProduct =
         data?.edges
             .filter(
@@ -47,8 +44,6 @@ const SidebarCollapsibleListing = () => {
                         productStatus: product.node.productStatus,
                     } as ProductsData)
             ) ?? [];
-
-    console.log("ItemsProduct:", itemsProduct);
 
     const vehiclesProduct =
         data?.edges
@@ -89,8 +84,6 @@ const SidebarCollapsibleListing = () => {
         .concat(vehiclesProduct)
         .concat(HousesProduct);
 
-    console.log("ProductsData:", productsData);
-
     return (
         <CollapsibleSidebarListItems
             icon={
@@ -123,7 +116,7 @@ const SidebarCollapsibleListing = () => {
                         </li>
                     )}
                     {isLoading && <div>Loading...</div>}
-                    {!error && !isLoading ? (
+                    {!error || !isLoading ? (
                         productsData &&
                         productsData.map((product) => (
                             <li

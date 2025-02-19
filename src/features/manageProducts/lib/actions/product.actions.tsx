@@ -12,15 +12,12 @@ import {
     AllProductsData,
     createFormSchema,
     CreateFormSchemaProps,
-    HouseProduct,
-    ItemProduct,
     ProductCategoryType,
     ProductStatus,
     ProductType,
     SingleProductData,
     SingleUserProductData,
     Tag,
-    VehicleProduct,
 } from "../utils";
 import { file } from "../../create/components/UploadImage";
 import { z } from "zod";
@@ -33,28 +30,25 @@ type PartialProductsNode = Partial<AllProductsData>;
 type PartialProductNode = Partial<SingleProductData>;
 type PartialUserProductNode = Partial<SingleUserProductData>;
 // type PartialProductCategory = Partial<ProductCategoryType>;
-type createStoreProductProps = {
-    product_status: ProductStatus;
-    product_type: ProductType;
-    medias: file;
-};
+// type createStoreProductProps = {
+//     product_status: ProductStatus;
+//     product_type: ProductType;
+//     medias: file;
+// };
 
 export const fetchAllProducts = async () => {
     const graphqlClient = await createGraphQLClient(); // Wait for the client to be created with the token
-    console.log("Fetching all products...");
     try {
         const response: PartialProductsNode = await graphqlClient.request(
             GET_ALL_PRODUCTS_QUERY
         );
         // Log the response to debug
-        console.log("Fetched products response:", response);
         // Ensure type safety when returning the data
         if (!response?.allProducts) {
             throw new Error("Failed to fetch products: Response is empty.");
         }
         return response.allProducts;
     } catch (error) {
-        console.error("Error fetching all products:", error);
         throw error;
     }
 };
@@ -71,7 +65,6 @@ export const fetchProductDetails = async (id: string) => {
         );
 
         // Log the response to debug
-        console.log("Fetched product details response:", response);
 
         // Ensure type safety when returning the data
         if (!response?.product) {
@@ -80,7 +73,6 @@ export const fetchProductDetails = async (id: string) => {
 
         return response.product;
     } catch (error) {
-        console.error("Error fetching product details:", error);
         throw error;
     }
 };
@@ -417,7 +409,6 @@ export const fetchProductEdit = async (id: string) => {
         );
 
         // Log the response to debug
-        console.log("Fetched product details response:", response);
 
         // Ensure type safety when returning the data
         if (!response?.userProduct) {
@@ -430,7 +421,6 @@ export const fetchProductEdit = async (id: string) => {
 
         return JSON.parse(JSON.stringify(apiData));
     } catch (error) {
-        console.error("Error fetching product details:", error);
         apiData = {
             data: [],
             errors: {
@@ -451,9 +441,6 @@ export const fetchAllItemCategories = async () => {
     try {
         const response: { allItemCategories: ProductCategoryType } =
             await graphqlClient.request(GET_ALL_ITEM_CATEGORIES);
-
-        // Log the response to debug
-        console.log("Fetched product details response:", response);
 
         // Ensure type safety when returning the data
         if (!response?.allItemCategories) {

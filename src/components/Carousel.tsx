@@ -84,14 +84,14 @@ const Carousel: React.FC<CarouselProps> = ({
         }
     };
 
-    let containerStyle = {
+    const containerStyle = {
         maxWidth: "100%",
         height: "100%",
         // transition: "transform .3s ease-out",
         paddingInline: visibleNextElement ? paddingInline : 0,
     };
 
-    let itmesStyle = {
+    const itmesStyle = {
         gap: spaceInBetween * 4,
         maxWidth: `calc(100% - ${
             !!spaceInBetween
@@ -101,7 +101,7 @@ const Carousel: React.FC<CarouselProps> = ({
         transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     };
 
-    let childStyle = {
+    const childStyle = {
         minWidth: `calc(${100 / currrentVisibleItems}%)`,
     };
 
@@ -115,7 +115,6 @@ const Carousel: React.FC<CarouselProps> = ({
         if (isDragging) {
             const diff = e.touches[0].clientX - startX;
             setTranslateX(diff);
-            console.log(diff);
 
             if (containerRef.current) {
                 const threshold = containerRef.current.offsetWidth / 6; // 25% of the container width

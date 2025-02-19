@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { ReactNode } from "react";
+import React from "react";
 
 type OnClosePopUpProps = {
     children?: React.ReactNode;

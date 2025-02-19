@@ -1,24 +1,14 @@
+import { ItemColumnProps } from "@/features/manageProducts/me/components/ItemColumns";
 import {
-    ItemColumns,
-    ItemColumnProps,
-} from "@/features/manageProducts/me/components/ItemColumns";
-import { ListingsDataTable } from "@/features/manageProducts/me/layout/ListingsDataTable";
-import {
-    AllItemProducts,
-    AllProducts,
     AllStoreProducts,
-    DeepPartialItemProduct,
     ItemEdge,
-    ItemProduct,
     ProductType,
     VehicleEdge,
 } from "@/features/manageProducts/lib/utils";
 import { DeepPartial } from "@apollo/client/utilities";
-import { mock } from "node:test";
 import React from "react";
 import ItemListing from "@/features/manageProducts/me/layout/ItemListing";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useQuery } from "@apollo/client";
 import { GET_ALL_STORE_PRODUCTS_QUERY } from "../lib/queries";
 import { initializeApollo } from "@/lib/apolloClient";
 import VehicleListing from "./VehicleListing";
@@ -29,7 +19,7 @@ type PartialProducts = { storeProducts: DeepPartial<AllStoreProducts> };
 
 // export default page;
 
-export async function getServerSideProps(): Promise<PartialProducts | any> {
+async function getServerSideData(): Promise<PartialProducts | any> {
     const apolloClient = initializeApollo();
 
     const { data } = await apolloClient.query({
@@ -41,9 +31,7 @@ export async function getServerSideProps(): Promise<PartialProducts | any> {
 }
 
 export default async function ListingResolver() {
-    const data: PartialProducts = await getServerSideProps();
-
-    // console.log("Data:", data.);
+    const data: PartialProducts = await getServerSideData();
 
     const itemsData: ItemColumnProps[] =
         data.storeProducts.edges
@@ -89,8 +77,6 @@ export default async function ListingResolver() {
                         status: product.node.productStatus,
                     } as VehicleColumnProps)
             ) ?? [];
-
-    console.log("ItemsData:", itemsData);
 
     return (
         <Tabs defaultValue="item" className="w-full">

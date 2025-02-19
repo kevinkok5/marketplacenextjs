@@ -3,7 +3,6 @@ import {
     FormControl,
     FormDescription,
     FormField,
-    FormItem,
     FormMessage,
 } from "@/components/ui/form";
 // import { Input } from "./ui/input";
@@ -67,6 +66,7 @@ const TagsForm = ({
                                         e.currentTarget.value = "";
                                     }
                                 }}
+                                {...field}
                             />
                         </FormControl>
                         <div className="flex flex-wrap mt-2 space-x-2">

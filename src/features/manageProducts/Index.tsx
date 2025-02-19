@@ -2,10 +2,8 @@
 
 import React from "react";
 import { ProductcardSkeleton } from "./components/ProductCardSkeleton";
-import ProductCard from "@/components/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllProducts } from "./lib/actions/product.actions";
-import Porducts from "@/layouts/Porducts";
 import { ProductType } from "./lib/utils";
 import ItemProductCard from "@/components/ItemProductCard";
 import VehicleProductCard from "@/components/VehicleProductCard";
@@ -15,9 +13,6 @@ const Index = () => {
         queryKey: ["allProducts"],
         queryFn: fetchAllProducts,
     });
-    if (error) {
-        console.log("erro: ", error);
-    } else console.log("data: ", data);
 
     const products = data?.edges;
     if (isLoading) {
@@ -32,6 +27,9 @@ const Index = () => {
                 <ProductcardSkeleton />
             </div>
         );
+    }
+    if (error) {
+        return <div>error</div>;
     }
     return (
         <div className="product-layout w-full py-6 px-8">

@@ -1,22 +1,16 @@
+import { lazy } from "react";
 import SidebarLinkListItem from "@/components/SidebarLinkListItem";
 import { Separator } from "@/components/ui/separator";
-import {
-    ChevronRight,
-    History,
-    Menu,
-    MenuSquare,
-    SquareMenuIcon,
-    X,
-} from "lucide-react";
-import React from "react";
+import { History, X } from "lucide-react";
+import React, { Suspense } from "react";
 import CollapsibleSidebarListItems from "@/components/CollapsibleSidebarListItems";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import SidebarCollapsibleListing from "../components/SidebarCollapsibleListing";
-import { type NextRequest } from "next/server";
-import { headers } from "next/headers";
-import { object } from "zod";
 import ResolveFromLinkOnCreate from "../components/ResolveFromLinkOnCreate";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const SidebarCollapsibleListing = lazy(
+    () => import("../components/SidebarCollapsibleListing")
+);
 
 const UserSidebar = () => {
     return (
@@ -46,53 +40,32 @@ const UserSidebar = () => {
 
                 <SidebarCollapsibleListing />
 
-                <ResolveFromLinkOnCreate
-                    className="bg-sky-950"
-                    label="New Listing"
-                    // active={true}
-                    href="/manage/create"
-                    svg={
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="size-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                            />
-                        </svg>
-                    }
-                />
-                {/* <SidebarLinkListItem
-                    label="Selected category"
-                    href=""
-                    svg={
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="size-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
-                            />
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M6 6h.008v.008H6V6Z"
-                            />
-                        </svg>
-                    }
-                /> */}
+                <Suspense
+                    fallback={<Skeleton className="w-full h-[6vh]"></Skeleton>}
+                >
+                    <ResolveFromLinkOnCreate
+                        className="bg-sky-950"
+                        label="New Listing"
+                        // active={true}
+                        href="/manage/create"
+                        svg={
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="size-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4.5v15m7.5-7.5h-15"
+                                />
+                            </svg>
+                        }
+                    />
+                </Suspense>
 
                 <Separator className="my-2" />
                 <CollapsibleSidebarListItems icon={<History />} label="History">

@@ -1,11 +1,9 @@
-import { ModeToggle } from "@/components/ModeToggle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getUser } from "@/features/user/lib/actions/user.actions";
 import Link from "next/link";
 import React from "react";
 import { UserDropdown } from "./components/UserDropdown";
 
-const Index = async () => {
+const Profile = async () => {
     const user = await getUser();
 
     if (!user) {
@@ -19,4 +17,4 @@ const Index = async () => {
     return <UserDropdown user={user} />;
 };
 
-export default Index;
+export default Profile;

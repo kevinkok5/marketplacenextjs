@@ -25,7 +25,6 @@ export const join = async () => {
         // if (!data || !data.me) {
         //     throw new Error("User data not found");
         // }
-        console.log("join: ", data);
         return data;
     } catch (error) {
         // Step 5: Handle GraphQL and network errors
@@ -140,7 +139,7 @@ export const createUserStore = async (
     return JSON.parse(JSON.stringify(apiData));
 };
 
-export const getStore = async () => {
+export const getUserStore = async () => {
     try {
         await verifySession();
         const apolloClient = initializeApollo();
@@ -150,7 +149,7 @@ export const getStore = async () => {
             fetchPolicy: "network-only", // Ensures fresh data
         });
 
-        if (!data || !data.allStores) {
+        if (!data || !data.allUserStores) {
             throw new Error("User data not found");
         }
         return data;

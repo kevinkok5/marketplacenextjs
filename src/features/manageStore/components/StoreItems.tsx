@@ -5,8 +5,6 @@ import { StoreEdge, StorePayload } from "../lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createStoreSession } from "../lib/storeSession";
 import { useToast } from "@/hooks/use-toast";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { CreditCard } from "lucide-react";
 import { Loader2 } from "lucide-react";
 
 type StoreProps = {

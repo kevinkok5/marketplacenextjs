@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
-import { createSession, decrypt, encrypt } from "./lib/session";
+import { decrypt, encrypt } from "./lib/session";
 import { isTokenExpired, refreshToken } from "./lib/manageToken";
 
 export default async function middleware(req: NextRequest) {
@@ -34,10 +34,10 @@ export default async function middleware(req: NextRequest) {
         };
 
         try {
-            console.log("INFO: Start refresh tokens");
+            // console.log("INFO: Start refresh tokens");
             const token = await refreshToken(session.token?.refresh);
 
-            console.log("INFO: End refresh tokens");
+            // console.log("INFO: End refresh tokens");
 
             const response = NextResponse.redirect(new URL(req.nextUrl));
 

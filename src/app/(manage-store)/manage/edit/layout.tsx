@@ -1,10 +1,6 @@
-import { Separator } from "@/components/ui/separator";
 import OnClosePopUp from "@/features/manageProducts/create/components/OnClosePopUp";
-import Navbar from "@/layouts/Navbar";
-import Sidebar from "@/layouts/Sidebar";
 import { X } from "lucide-react";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function RootLayout({
     children,
@@ -36,14 +32,21 @@ export default async function RootLayout({
                             public
                         </p>
                     </div>
-                    <OnClosePopUp className="p-1">
-                        <X className="w-4 h-4" />
-                    </OnClosePopUp>
+                    <Suspense fallback={<X className="w-4 h-4" />}>
+                        <OnClosePopUp className="p-1">
+                            <X className="w-4 h-4" />
+                        </OnClosePopUp>
+                    </Suspense>
                 </div>
-                {children}
+                <Suspense>{children}</Suspense>
             </section>
-
-            <OnClosePopUp className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></OnClosePopUp>
+            <Suspense
+                fallback={
+                    <div className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></div>
+                }
+            >
+                <OnClosePopUp className="min-h-screen w-full opacity-40 bg-black absolute top-0 -z-10 left-0"></OnClosePopUp>
+            </Suspense>
         </section>
     );
 }

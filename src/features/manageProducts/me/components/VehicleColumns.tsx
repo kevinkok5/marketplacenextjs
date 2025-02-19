@@ -3,10 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import {
     ArrowUpDown,
-    Edit,
     EllipsisVertical,
     Eye,
-    MoreHorizontal,
     Pen,
     Share2,
     Trash2,
@@ -22,14 +20,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-    DeepPartialItemProduct,
-    DeepPartialVehicleProduct,
-    ProductStatus,
-} from "../../lib/utils";
+import { DeepPartialVehicleProduct } from "../../lib/utils";
 import { customCapitalize, getAbsoluteUrl } from "@/lib/utils";
 import Image from "next/image";
-import ButtonLoading from "@/components/ButtonLoading";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -72,7 +65,6 @@ export const vehicleColumns: ColumnDef<VehicleColumnProps>[] = [
         header: "Product",
         cell: ({ row }) => {
             const originalObj = row.original;
-            console.log;
 
             return (
                 <div className="flex gap-4">
@@ -87,8 +79,8 @@ export const vehicleColumns: ColumnDef<VehicleColumnProps>[] = [
                                               ?.edges[0].node?.media
                                             ? originalObj?.product?.node?.medias
                                                   ?.edges[0].node?.media
-                                            : "/"
-                                        : "/"
+                                            : ""
+                                        : ""
                                 }
                                 alt={
                                     originalObj?.product?.node?.make

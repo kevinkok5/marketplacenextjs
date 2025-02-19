@@ -5,7 +5,7 @@ import { ProductCategoryType } from "@/features/manageProducts/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
-const page = () => {
+const Page = () => {
     // const { itemId: id } = params;
     const {
         data: category,
@@ -25,7 +25,6 @@ const page = () => {
             }
         },
     });
-    console.log("resuld: ", error);
     if (isLoading) return <>loading...</>;
     if (error) return <>error...</>;
     return (
@@ -37,4 +36,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

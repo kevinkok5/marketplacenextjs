@@ -1,29 +1,16 @@
-import Sidebar from "@/features/manageProducts/create/layouts/Sidebar";
 import Link from "next/link";
-import React from "react";
+import React, { lazy } from "react";
 
 import { getUser } from "@/features/user/lib/actions/user.actions";
 import { redirect } from "next/navigation";
-import { CreditCard, MoveLeft, Plus, Store } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getStore } from "@/features/manageStore/lib/actions/store.actions";
-import { allStores } from "@/features/manageStore/lib/utils";
-import StoreItems from "@/features/manageStore/components/StoreItems";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import ItemForm from "@/features/manageProducts/create/item/layouts/ItemForm";
-import CreateStoreForm from "@/features/manageStore/create/layouts/CreateStoreForm";
-import NavigateBack from "@/components/NavigateBack";
+import { MoveLeft, Store } from "lucide-react";
 
-type Stores = {
-    allStores: allStores;
-};
+const CreateStoreForm = lazy(
+    () => import("@/features/manageStore/create/layouts/CreateStoreForm")
+);
+const NavigateBack = lazy(() => import("@/components/NavigateBack"));
 
-const page = async () => {
+const Page = async () => {
     const user = await getUser();
     if (!user || !user.isShopOwner) redirect("/store/join");
 
@@ -43,4 +30,4 @@ const page = async () => {
     );
 };
 
-export default page;
+export default Page;

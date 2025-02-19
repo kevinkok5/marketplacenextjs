@@ -1,5 +1,5 @@
 import { createGraphQLClient } from "@/lib/graphqlClient";
-import { AllStoreProductsData, SingleProductData } from "../../../lib/utils";
+import { AllStoreProductsData } from "../../../lib/utils";
 import { GET_STORE_RECENT_PRODUCTS_QUERY } from "../queries";
 
 type PartialProductsNode = Partial<AllStoreProductsData>;

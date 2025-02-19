@@ -3,16 +3,9 @@
 // this is a normale SidebarLinkListItem but add the "?from" search param to the link
 
 import { cn } from "@/lib/utils";
-import { link } from "fs";
-import {
-    ArrowDown10,
-    ArrowRight,
-    ChevronLeftCircle,
-    ChevronRight,
-    MoveLeft,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 type SidbarLinkListItemProps = {
@@ -34,7 +27,6 @@ const ResolveFromLinkOnCreate = ({
     external = false,
 }: SidbarLinkListItemProps): JSX.Element => {
     const searchPath = usePathname();
-    console.log("searchPath", searchPath);
 
     let queryParam = "";
     if (searchPath.startsWith("/manage/")) {

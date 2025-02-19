@@ -3,19 +3,16 @@ import {
     FormControl,
     FormDescription,
     FormField,
-    FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 // import { Input } from "./ui/input";
 import { z } from "zod";
 import { Control, FieldPath } from "react-hook-form";
-import { authFormSchema, AuthType } from "@/lib/utils";
 import {
     createFormSchema,
     ProductStatus,
     ProductType,
 } from "@/features/manageProducts/lib/utils";
-import { Input } from "@/components/ui/input";
 import { GoogleInput } from "@/components/GoogleInput";
 
 const formSchema = createFormSchema({
@@ -35,7 +32,6 @@ interface ItemFormInputProps {
 const ItemFormInput = ({
     control,
     name,
-    label,
     placeholder,
     description,
     type = "text",

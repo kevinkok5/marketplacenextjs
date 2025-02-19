@@ -7,30 +7,19 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/CustomInput";
-import { authFormSchema, AuthType, randomKeyGenerator } from "@/lib/utils";
+import { authFormSchema, AuthType } from "@/lib/utils";
 import { Store } from "lucide-react";
 import { signIn, signUp } from "@/lib/actions/auth.actions";
-import { userAgent } from "next/server";
 import { useToast } from "@/hooks/use-toast";
 
 type LoginLogoutDialogProps = {

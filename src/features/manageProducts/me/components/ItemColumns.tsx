@@ -3,10 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import {
     ArrowUpDown,
-    Edit,
     EllipsisVertical,
     Eye,
-    MoreHorizontal,
     Pen,
     Share2,
     Trash2,
@@ -22,10 +20,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DeepPartialItemProduct, ProductStatus } from "../../lib/utils";
+import { DeepPartialItemProduct } from "../../lib/utils";
 import { customCapitalize, getAbsoluteUrl } from "@/lib/utils";
 import Image from "next/image";
-import ButtonLoading from "@/components/ButtonLoading";
 import Link from "next/link";
 
 // This type is used to define the shape of our data.
@@ -70,7 +67,6 @@ export const ItemColumns: ColumnDef<any>[] = [
         header: "Product",
         cell: ({ row, handleDelete }: any) => {
             const originalObj = row.original;
-            console.log;
 
             return (
                 <div className="flex gap-4">
@@ -85,8 +81,8 @@ export const ItemColumns: ColumnDef<any>[] = [
                                               ?.edges[0].node?.media
                                             ? originalObj?.product?.node?.medias
                                                   ?.edges[0].node?.media
-                                            : "/"
-                                        : "/"
+                                            : ""
+                                        : ""
                                 }
                                 alt={
                                     originalObj?.product?.node?.name

@@ -1,7 +1,4 @@
-import {
-    DeepPartialItemProduct,
-    ProductEdge,
-} from "@/features/manageProducts/lib/utils";
+import { DeepPartialItemProduct } from "@/features/manageProducts/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -9,8 +6,8 @@ import React from "react";
 const ItemProductCard = ({ product }: { product: DeepPartialItemProduct }) => {
     return (
         <div className="product-card ">
-            <Link href={`/item/${product?.node?.id}`}>
-                <div className="w-full rounded-lg aspect-square bg-gray-500">
+            <Link href={`/product/${product?.node?.id}`}>
+                <div className="relative w-full rounded-lg aspect-square bg-gray-500">
                     {product?.node?.medias?.edges != undefined ? (
                         <Image
                             src={
@@ -18,16 +15,15 @@ const ItemProductCard = ({ product }: { product: DeepPartialItemProduct }) => {
                                     ? product.node.medias.edges[0].node?.media
                                         ? product.node.medias.edges[0].node
                                               ?.media
-                                        : "/"
-                                    : "/"
+                                        : ""
+                                    : ""
                             }
                             alt={
                                 product?.node?.name
                                     ? `${product?.node?.name}-image`
                                     : "image"
                             }
-                            width={800}
-                            height={600}
+                            fill
                             className="rounded-lg w-full h-full object-cover"
                         />
                     ) : (

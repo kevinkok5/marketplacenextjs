@@ -1,8 +1,7 @@
-import Sidebar from "@/features/manageProducts/create/layouts/Sidebar";
 import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const Page = () => {
     return (
         // <div>
         <section className="flex items-center justify-center gap-4 grow">
@@ -26,4 +25,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

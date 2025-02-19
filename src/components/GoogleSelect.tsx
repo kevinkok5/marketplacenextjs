@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { string } from "zod";
 // import { SidebarCloseIcon, X } from "lucide-react";
 
 export interface SelectProps
@@ -11,7 +10,7 @@ export interface SelectProps
 }
 
 const GoogleSelect = React.forwardRef<HTMLSelectElement, SelectProps>(
-    ({ className, type, label, options, defaultValue, ...props }, ref) => {
+    ({ className, label, options, ...props }, ref) => {
         return (
             <div className="relative">
                 <select

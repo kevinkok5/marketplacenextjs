@@ -1,11 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-    ArrowDown10,
-    ArrowRight,
-    ChevronLeftCircle,
-    ChevronRight,
-    MoveLeft,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
