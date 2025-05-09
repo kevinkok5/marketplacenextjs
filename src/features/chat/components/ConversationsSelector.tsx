@@ -18,10 +18,12 @@ const ConversationsSelector = async ({ user }: ConversationsSelectorProps) => {
 
     return (
         <div className="w-full py-6 border-b border-solid border-neutral-600">
-            <ConversationsSelectorDialog
-                user={user}
-                stores={stores.allUserStores}
-            />
+            {user && stores && (
+                <ConversationsSelectorDialog
+                    user={user}
+                    stores={stores.allUserStores}
+                />
+            )}
         </div>
     );
 };

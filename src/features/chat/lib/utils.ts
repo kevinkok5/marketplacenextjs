@@ -1,4 +1,9 @@
-import { Store } from "@/features/manageProducts/lib/utils";
+import {
+    HouseProduct,
+    ItemProduct,
+    Store,
+    VehicleProduct,
+} from "@/features/manageProducts/lib/utils";
 import { User } from "@/features/user/lib/utils";
 
 export interface PageInfo {
@@ -32,7 +37,7 @@ export interface Message {
     content: string;
     createdAt: string;
     status: string;
-    sender: User;
+    senderId: string;
 }
 
 export interface Edge<T> {
@@ -50,6 +55,7 @@ export interface Conversation {
     client: User;
     store: Store;
     updatedAt: string;
+    product: ItemProduct | VehicleProduct | HouseProduct;
     messages: Connection<Message> & { success: boolean };
     unreadCount: number;
 }

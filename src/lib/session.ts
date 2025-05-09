@@ -5,6 +5,9 @@ import { JWTPayload, SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+// const isDev = process.env.NODE_ENV !== "production";
+const isDev = true;
+
 export interface tokenSession {
     token?: {
         refresh: string;
@@ -43,9 +46,9 @@ export const createSession = async (token: JWTPayload | undefined) => {
     const cookie = {
         name: "session",
         options: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax" as const, // Ensure this is 'strict' | 'lax' | 'none'
+            httpOnly: !isDev, // Disable only in dev
+            secure: !isDev, // Secure only in prod
+            sameSite: isDev ? ("lax" as const) : ("strict" as const),
             path: "/",
         },
         duration: 1000 * 60 * 60 * 24 * 21,
@@ -57,23 +60,25 @@ export const createSession = async (token: JWTPayload | undefined) => {
 
     // console.log("session created");
 
-    cookies().set(cookie.name, session, { ...cookie.options, expires });
-    redirect("/");
+    (await cookies()).set(cookie.name, session, { ...cookie.options, expires });
+    // redirect("/");
 };
 
 export const verifySession = async (): Promise<tokenSession> => {
     const cookie = {
         name: "session",
         options: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax" as const, // Ensure this is 'strict' | 'lax' | 'none'
+            httpOnly: !isDev, // Disable only in dev
+            secure: !isDev, // Secure only in prod
+            sameSite: isDev ? "lax" : "strict",
             path: "/",
         },
         duration: 1000 * 60 * 60 * 24 * 21,
     };
 
-    const storedCookie = cookies().get(cookie.name)?.value;
+    // const awaitedCookie = await cookies(); // Await cookies() first
+
+    const storedCookie = (await cookies()).get(cookie.name)?.value;
     if (!storedCookie) redirect("/auth");
     const session = await decrypt(storedCookie);
     if (!session?.token) redirect("/auth");
@@ -85,14 +90,15 @@ export const deleteSession = async () => {
     const cookie = {
         name: "session",
         options: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax" as const, // Ensure this is 'strict' | 'lax' | 'none'
+            httpOnly: !isDev, // Disable only in dev
+            secure: !isDev, // Secure only in prod
+            sameSite: isDev ? "lax" : "strict",
             path: "/",
         },
         duration: 1000 * 60 * 60 * 24 * 21,
     };
+    const awaitedCookie = await cookies(); // Await cookies() first
 
-    cookies().delete(cookie.name);
-    redirect("/auth");
+    awaitedCookie.delete(cookie.name);
+    return { success: true };
 };

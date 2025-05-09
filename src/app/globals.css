@@ -90,6 +90,13 @@ body {
         @apply bg-background text-sm font-light text-foreground;
         font-family: "Inter", sans-serif;
     }
+    .no-scrollbar::-webkit-scroollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
     .container {
         @apply mx-auto !w-full !max-w-full px-4;
     }
@@ -101,14 +108,14 @@ body {
         border-bottom: 1px solid;
     }
     .product-layout {
-        @apply grid gap-2;
+        @apply grid gap-2 max-sm:gap-1;
         @screen lg {
             grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
         }
-        /* md {
-            grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-        } */
+        @screen sm {
+            grid-template-columns: repeat(auto-fill, minmax(11.3rem, 1fr));
+        }
 
-        grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
     }
 }

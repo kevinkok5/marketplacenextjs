@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import { z } from "zod";
-import crypto from "crypto";
+// import crypto from "crypto";
 import { NextRequest } from "next/server";
 
 // Type | zod
@@ -96,9 +96,11 @@ export const isTokenExpired = (token: string) => {
 };
 
 export const getCookie = (name: string): string | undefined => {
+    if (typeof document === "undefined") return; // Prevents SSR issues
+
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift();
+    return parts.length === 2 ? parts.pop()?.split(";").shift() : undefined;
 };
 
 export class CustomError extends Error {
@@ -126,6 +128,8 @@ export const fetchData = async (url: string, fetchOptions: fetchOptions) => {
                 errors: {
                     status: response.status,
                     message:
+                        errorData.email ||
+                        errorData.username ||
                         errorData.error ||
                         errorData.detail ||
                         response.statusText, // Django's typical error response
@@ -159,15 +163,15 @@ export const wait = (duration: number) => {
     });
 };
 
-export const randomKeyGenerator = () => {
-    const key = crypto.randomBytes(32).toString("base64");
+// export const randomKeyGenerator = () => {
+//     const key = crypto.randomBytes(32).toString("base64");
 
-    const base64url = key
-        .replace(/\+/g, "-") // Replace + with -
-        .replace(/\//g, "_") // Replace / with _
-        .replace(/=+$/, ""); // Remove padding =
-    return base64url;
-};
+//     const base64url = key
+//         .replace(/\+/g, "-") // Replace + with -
+//         .replace(/\//g, "_") // Replace / with _
+//         .replace(/=+$/, ""); // Remove padding =
+//     return base64url;
+// };
 
 export type DeepPartial<T> = T extends object
     ? {
@@ -193,4 +197,46 @@ export function getAbsoluteUrl(
         return `${protocol}://${host}${path}`;
     }
     return ""; // Default case if neither environment is matched
+}
+
+export const parseDate = (dateStr: string) =>
+    new Date(dateStr.replace(" ", "T"));
+
+export function formatDateTime(
+    dateString: string,
+    locale: string = "fr-FR"
+): string {
+    const parseDateString = parseDate(dateString);
+    const date = new Date(parseDateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+    const optionsDate: Intl.DateTimeFormatOptions = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    };
+    const optionsWeek: Intl.DateTimeFormatOptions = {
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    };
+    const optionsDay: Intl.DateTimeFormatOptions = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    };
+
+    if (diffDays > 7) {
+        return date.toLocaleDateString(locale, optionsDate).replace(",", "");
+    } else if (diffDays > 1) {
+        return date.toLocaleDateString(locale, optionsWeek).replace(",", "");
+    } else {
+        return date.toLocaleTimeString(locale, optionsDay);
+    }
 }

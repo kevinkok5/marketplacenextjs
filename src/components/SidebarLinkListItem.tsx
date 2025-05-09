@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { type JSX } from "react";
 
 type SidbarLinkListItemProps = {
-    svg: React.ReactElement;
+    svg: React.ReactElement<any>;
     label: string;
     className?: string;
     // onClick?: () => void;
@@ -33,7 +33,7 @@ const SidbarLinkListItem = ({
                 )}
             >
                 <div>{svg}</div>
-                <div className="w-full">{label}</div>
+                <div className="w-full font-semibold">{label}</div>
 
                 {external && <ChevronRight className="h-5 w-5" />}
             </div>

@@ -9,7 +9,7 @@ import Profile from "@/features/user/Profile";
 
 const UserNavbar = () => {
     return (
-        <div className="navbar z-10 sticky top-0 bg-background">
+        <div className="navbar z-50 sticky top-0 bg-background">
             <nav className="container text-[13px] h-full flex justify-between">
                 <div className="nav_left flex items-center ">
                     <Link href="/">
@@ -44,7 +44,7 @@ const UserNavbar = () => {
                     </div>
                 </div>
                 <div className="nav_right flex items-center">
-                    <div className="relative">
+                    <div className="relative  max-sm:hidden">
                         <Input
                             type="text"
                             className="!bg-input min-w-72"
@@ -54,7 +54,10 @@ const UserNavbar = () => {
                         <X className="absolute right-2 top-[50%] -translate-y-1/2 w-[18px] h-[18px]" />
                     </div>
 
-                    <Separator className="mx-4" orientation="vertical" />
+                    <Separator
+                        className="mx-4 max-sm:hidden"
+                        orientation="vertical"
+                    />
 
                     <div className="notification flex h-full gap-4 items-center">
                         <div className="bg-input p-[7px] rounded-sm">

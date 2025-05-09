@@ -6,10 +6,10 @@ const ProductCarousel = lazy(() => import("../components/ProductCarousel"));
 
 type ProductItemDetailsProps = {
     data: ItemProduct;
-    productId: string;
+    // productId: string;
 };
 
-const ProductItemDetails = ({ data, productId }: ProductItemDetailsProps) => {
+const ProductItemDetails = ({ data }: ProductItemDetailsProps) => {
     // const products = [
     //     {
     //         imageUrl:
@@ -53,9 +53,8 @@ const ProductItemDetails = ({ data, productId }: ProductItemDetailsProps) => {
         <div className="w-full h-full flex max-md:flex-col">
             <ProductCarousel mediaEdges={data?.medias?.edges} />
             <ProductRightSideBar
-                productId={productId}
                 store={data?.store}
-                product={data as any}
+                product={data as ItemProduct}
             />
         </div>
     );

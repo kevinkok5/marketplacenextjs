@@ -21,8 +21,8 @@ export const CREATE_STORE_MUTATION = gql`
 `;
 
 export const GET_ALL_USER_STORE = gql`
-    query getAllUsersStore {
-        allUserStores {
+    query getAllUsersStore($first: Int) {
+        allUserStores(first: $first) {
             edges {
                 node {
                     id

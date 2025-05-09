@@ -16,6 +16,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 // ✅ Validation schema
 const formSchema = z.object({
@@ -25,16 +26,17 @@ const formSchema = z.object({
 });
 
 interface CheckAvailabilityProps {
-    conversationId: number;
+    storeId: string | undefined;
+    token: string | null;
+    productId: string | null;
 }
 
 const CheckAvailabilityMobile: React.FC<CheckAvailabilityProps> = ({
-    conversationId,
+    storeId,
+    token,
+    productId,
 }) => {
     const { toast } = useToast();
-    const ws = useRef<WebSocket | null>(null);
-    const [isConnected, setIsConnected] = useState(false);
-    const reconnectAttempts = useRef(0);
 
     // ✅ useForm hook
     const form = useForm<z.infer<typeof formSchema>>({
@@ -42,81 +44,32 @@ const CheckAvailabilityMobile: React.FC<CheckAvailabilityProps> = ({
         defaultValues: { message: "" },
     });
 
-    // ✅ Establish WebSocket connection with automatic reconnection
-    const connectWebSocket = () => {
-        if (!conversationId) return;
-
-        const wsUrl = `ws://127.0.0.1:8000/ws/chat/${conversationId}/`;
-        ws.current = new WebSocket(wsUrl);
-
-        ws.current.onopen = () => {
-            console.log("✅ WebSocket connected");
-            setIsConnected(true);
-            reconnectAttempts.current = 0; // Reset reconnection attempts
-        };
-
-        ws.current.onerror = (error) => {
-            console.error("⚠️ WebSocket error:", error);
-        };
-
-        ws.current.onclose = () => {
-            console.warn("❌ WebSocket closed");
-
-            setIsConnected(false);
-
-            // Implement exponential backoff for reconnection attempts
-            const delay = Math.min(5000, 1000 * 2 ** reconnectAttempts.current); // Max delay of 5s
-            reconnectAttempts.current += 1;
-
-            setTimeout(() => {
-                console.log(
-                    `♻️ Attempting WebSocket reconnect (#${reconnectAttempts.current})`
-                );
-                connectWebSocket();
-            }, delay);
-        };
-
-        ws.current.onmessage = (event) => {
-            console.log("📩 New message:", event.data);
-        };
-    };
-
-    // useEffect(() => {
-    //     // connectWebSocket();
-
-    //     return () => {
-    //         ws.current?.close();
-    //     };
-    // }, [conversationId]);
+    const { ws, connectWebSocket } = useWebSocket(`/startChat/${storeId}/`, {
+        authorisationHeader: { token: token },
+        retry: true,
+    });
 
     // ✅ Handle message sending
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
+    const onSubmit = (values: z.infer<typeof formSchema>) => {
         if (!ws.current || ws.current.readyState !== WebSocket.OPEN) {
             console.warn("⚠️ WebSocket is closed. Reconnecting...");
-            // connectWebSocket(); // Reconnect if the WebSocket was closed
+            connectWebSocket(); // Reconnect if the WebSocket was closed
         }
 
         setTimeout(() => {
             if (ws.current && ws.current.readyState === WebSocket.OPEN) {
                 const messageData = JSON.stringify({
                     type: "message",
-                    content: data.message,
+                    content: values.message,
+                    productId: productId,
                 });
                 ws.current.send(messageData);
                 console.log("📤 Message sent:", messageData);
 
                 toast({
                     className: "font-bold",
-                    title: "Message envoyé",
-                    description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">
-                                {JSON.stringify(data, null, 2)}
-                            </code>
-                        </pre>
-                    ),
+                    title: "Message envoyé ✔️✔️",
                 });
-
                 form.reset();
             } else {
                 console.error(
@@ -127,7 +80,7 @@ const CheckAvailabilityMobile: React.FC<CheckAvailabilityProps> = ({
     };
 
     return (
-        <div className="md:bottom-0 md:ml-[1px] md:p-4 md:border-t md:border-solid dark:border-neutral-600 md:border-neutral-300 text-xs pb-3 flex gap-4 dark:bg-black bg-white w-full z-10 md:hidden">
+        <div className="dark:border-neutral-600 border-neutral-100 text-xs py-4 flex gap-4 bg-none w-full md:hidden">
             <div className="flex flex-col w-full gap-2">
                 <Form {...form}>
                     <form
@@ -140,14 +93,14 @@ const CheckAvailabilityMobile: React.FC<CheckAvailabilityProps> = ({
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="font-bold text-sm flex items-center gap-2">
-                                        <MessageSquareText size={20} />
+                                        {/* <MessageSquareText size={20} /> */}
                                         Contacter le Vendeur
                                     </FormLabel>
                                     <FormControl>
                                         <Textarea
                                             placeholder="Tapez votre message ici..."
                                             {...field}
-                                            className="w-full resize-none border-[1.5px] border-neutral-300 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-600 rounded-lg h-[10vh]"
+                                            className="font-medium text-[13.5px] text-neutral-800 dark:text-neutral-200 w-full resize-none border-[1.5px] border-neutral-300 bg-neutral-100 focus-visible:!ring-blue-50 dark:focus-visible:!ring-blue-950  hover:bg-neutral-200 focus:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-600 rounded-lg h-[10vh]"
                                         />
                                     </FormControl>
                                     <FormMessage />

@@ -57,7 +57,7 @@ const UploadImage = ({ files, setFiles, errors, setErrors }: uplaoadInput) => {
                         </div>
                     )}
                     <div
-                        className="border-neutral-600 border rounded-sm aspect-square flex flex-col items-center justify-center gap-4 text-[13px]"
+                        className="border-neutral-600 border rounded-sm sm:aspect-square aspect-video flex flex-col items-center justify-center gap-4 text-[13px]"
                         onClick={() => {
                             const uplaoadInput = document.querySelector(
                                 "#uploadImage"

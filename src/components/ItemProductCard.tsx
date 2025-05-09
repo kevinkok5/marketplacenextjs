@@ -5,9 +5,9 @@ import React from "react";
 
 const ItemProductCard = ({ product }: { product: DeepPartialItemProduct }) => {
     return (
-        <div className="product-card ">
+        <div className="product-card">
             <Link href={`/product/${product?.node?.id}`}>
-                <div className="relative w-full rounded-lg aspect-square bg-gray-500">
+                <div className="relative w-full sm:rounded-lg aspect-square border border-neutral-200 dark:border-neutral-800 overflow-hidden">
                     {product?.node?.medias?.edges != undefined ? (
                         <Image
                             src={
@@ -24,17 +24,17 @@ const ItemProductCard = ({ product }: { product: DeepPartialItemProduct }) => {
                                     : "image"
                             }
                             fill
-                            className="rounded-lg w-full h-full object-cover"
+                            className="sm:rounded-lg w-full h-full object-cover"
                         />
                     ) : (
                         ""
                     )}
                 </div>
-                <div className="py-3">
-                    <div className="font-[500] text-base ">
+                <div className="sm:py-3 pt-2 pb-3">
+                    <div className="sm:font-medium font-bold sm:text-base text-[15px]">
                         ZAR {product?.node?.price}
                     </div>
-                    <div className="font-[500] truncate text-neutral-400 capitalize text-sm ">
+                    <div className="font-[500] truncate dark:text-neutral-300  capitalize text-sm">
                         {product?.node?.name}
                     </div>
                 </div>

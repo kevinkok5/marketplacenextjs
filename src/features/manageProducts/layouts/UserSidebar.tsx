@@ -15,7 +15,7 @@ const SidebarCollapsibleListing = lazy(
 const UserSidebar = () => {
     return (
         <div className="flex min-w-[22rem] max-md:hidden sticky top-12 !h-[calc(100dvh-48px)]">
-            <div className="w-full h-full px-2 py-6">
+            <div className="w-full h-full px-2 py-6 flex flex-col gap-1">
                 <SidebarLinkListItem
                     label="Dashboard"
                     active={true}
@@ -44,7 +44,7 @@ const UserSidebar = () => {
                     fallback={<Skeleton className="w-full h-[6vh]"></Skeleton>}
                 >
                     <ResolveFromLinkOnCreate
-                        className="bg-sky-950"
+                        className="dark:bg-blue-950 bg-sky-100  font-semibold hover:bg-blue-200 dark:hover:bg-neutral-800"
                         label="New Listing"
                         // active={true}
                         href="/manage/create"

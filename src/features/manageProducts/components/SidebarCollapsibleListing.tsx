@@ -14,6 +14,7 @@ import {
     VehicleEdge,
 } from "../lib/utils";
 import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type ProductsData = {
     media: MeidaType | undefined;
@@ -38,6 +39,7 @@ const SidebarCollapsibleListing = () => {
             .map(
                 (product) =>
                     ({
+                        id: product.node.id, // Ensure id is included
                         media: product.node.medias,
                         name: product.node.name,
                         productType: product.node.productType,
@@ -110,12 +112,29 @@ const SidebarCollapsibleListing = () => {
                     {error && (
                         <li
                             key="error"
-                            className="flex gap-4 pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light"
+                            className="flex gap-4 pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-medium"
                         >
                             No product yet
                         </li>
                     )}
-                    {isLoading && <div>Loading...</div>}
+                    {isLoading && (
+                        <>
+                            <li className="flex font-semibold gap-4 pl-8 py-3 rounded-sm ">
+                                <Skeleton className="flex bg-neutral-200 justify-center items-center  max-h-10 h-10 min-w-12 max-w-12 rounded-sm" />
+                                <div className="flex flex-col h-full justify-between w-[78%] gap-1">
+                                    <Skeleton className="bg-neutral-200 w-full h-3" />
+                                    <Skeleton className="bg-neutral-200 w-1/2 h-2" />
+                                </div>
+                            </li>
+                            <li className="flex font-semibold gap-4 pl-8 py-3 rounded-sm ">
+                                <Skeleton className="flex bg-neutral-200 justify-center items-center  max-h-10 h-10 min-w-12 max-w-12 rounded-sm" />
+                                <div className="flex flex-col h-full justify-between w-[78%] gap-1">
+                                    <Skeleton className="bg-neutral-200 w-full h-3" />
+                                    <Skeleton className="bg-neutral-200 w-1/2 h-2" />
+                                </div>
+                            </li>
+                        </>
+                    )}
                     {!error || !isLoading ? (
                         productsData &&
                         productsData.map((product) => (
@@ -123,7 +142,7 @@ const SidebarCollapsibleListing = () => {
                                 key={product.id}
                                 className="flex text-[13px] text-gray-200 font-semibold gap-4 pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input"
                             >
-                                <div className="flex justify-center items-center bg-indigo-200 max-h-10 h-10 min-w-12 max-w-12 rounded-sm">
+                                <div className="flex justify-center items-center bg-neutral-100 dark:bg-neutral-800 max-h-10 h-10 min-w-12 max-w-12 rounded-sm">
                                     {product.media?.edges[0]?.node?.media ? (
                                         <Image
                                             src={
@@ -147,7 +166,7 @@ const SidebarCollapsibleListing = () => {
                                             viewBox="0 0 24 24"
                                             strokeWidth={1.5}
                                             stroke="currentColor"
-                                            className="size-5 text-black"
+                                            className="size-5 text-black dark:text-white"
                                         >
                                             <path
                                                 strokeLinecap="round"
@@ -158,12 +177,14 @@ const SidebarCollapsibleListing = () => {
                                     )}
                                 </div>
                                 <div className="flex justify-between w-[78%] gap-4">
-                                    <p className="truncate w-4/6">
+                                    <p className="truncate w-4/6 text-black dark:text-neutral-200">
                                         {product.name
                                             ? product.name
                                             : "Untitle"}
                                     </p>
-                                    <span>{product.productStatus}</span>
+                                    <span className="text-black dark:text-white">
+                                        {product.productStatus}
+                                    </span>
                                 </div>
                             </li>
                         ))

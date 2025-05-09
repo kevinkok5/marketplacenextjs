@@ -1,10 +1,16 @@
-import { initializeApollo } from "@/lib/apolloClient";
 import { GET_PRODUCT_DETAILS_QUERY } from "@/features/manageProducts/lib/queries";
-import ProductItemDetails from "@/features/product/item/ProductItemDetails";
 import { apiData } from "@/lib/utils";
+import { initializeApollo } from "@/lib/apolloClient";
 import { ApolloError } from "@apollo/client";
 
-async function getServerSideData(id: string): Promise<apiData> {
+// type PartialProductCategory = Partial<ProductCategoryType>;
+// type createStoreProductProps = {
+//     product_status: ProductStatus;
+//     product_type: ProductType;
+//     medias: file;
+// };
+
+export async function getProductDetails(id: string): Promise<apiData> {
     const apolloClient = initializeApollo();
 
     const variables = { id: id };
@@ -76,18 +82,3 @@ async function getServerSideData(id: string): Promise<apiData> {
     }
     return apiData;
 }
-
-const Page = async ({ params }: { params: { productId: string } }) => {
-    const { productId: id } = params;
-
-    const data = await getServerSideData(id);
-
-    if (data.errors) return <div>Error</div>;
-
-    if (data.data?.__typename === "ItemType") {
-        return <ProductItemDetails data={data.data} productId={id} />;
-    }
-    return <></>;
-};
-
-export default Page;

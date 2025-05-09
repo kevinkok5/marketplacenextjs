@@ -10,7 +10,7 @@ const Page = () => {
                     Item
                 </div>
             </Link>
-            <Link href="/manage/create/item">
+            {/* <Link href="/manage/create/item">
                 <div className="border border-neutral-600 h-44 w-36 rounded-sm flex items-center justify-center">
                     Vehicul
                 </div>
@@ -19,7 +19,7 @@ const Page = () => {
                 <div className="border border-neutral-600 h-44 w-36 rounded-sm flex items-center justify-center">
                     Rental
                 </div>
-            </Link>
+            </Link> */}
         </section>
         // </div>
     );

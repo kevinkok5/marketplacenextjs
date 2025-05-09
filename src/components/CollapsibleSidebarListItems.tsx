@@ -7,7 +7,7 @@ import {
 import { ChevronDown } from "lucide-react";
 
 type CollapsibleSidebarListItems = {
-    icon: React.ReactElement;
+    icon: React.ReactElement<any>;
     label: string;
     children?: React.ReactNode;
     defaultValue?: string;
@@ -30,7 +30,7 @@ const CollapsibleSidebarListItems: React.FC<CollapsibleSidebarListItems> = ({
         >
             <AccordionItem value={value} className="border-none">
                 <AccordionTrigger className="flex px-3 py-3 gap-2 text-sm hover:no-underline rounded-sm items-center transition duration-200 ease-out  hover:bg-input font-light">
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center font-semibold">
                         {icon}
                         {label}
                     </div>

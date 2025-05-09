@@ -25,7 +25,13 @@ const nextConfig = {
             {
                 protocol: "http", // ⚠️ Si ton backend est en local, il est probablement en HTTP et non HTTPS
                 hostname: "127.0.0.1",
-                port: "8000",
+                // port: "8000",
+                pathname: "**",
+            },
+            {
+                protocol: "http", // ⚠️ Si ton backend est en local, il est probablement en HTTP et non HTTPS
+                hostname: "192.168.0.143",
+                // port: "8000",
                 pathname: "**",
             },
             {

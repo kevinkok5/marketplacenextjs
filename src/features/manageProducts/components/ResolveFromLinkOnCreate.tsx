@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { type JSX } from "react";
 
 type SidbarLinkListItemProps = {
-    svg: React.ReactElement;
+    svg: React.ReactElement<any>;
     label: string;
     className?: string;
     // onClick?: () => void;

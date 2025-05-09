@@ -4,10 +4,15 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import Profile from "@/features/user/Profile";
+import ViewAllStoresDialog from "@/features/user/components/ViewAllStoresDialog";
+import MessageCount from "@/components/MessageCount";
+import { getUser } from "@/features/user/lib/actions/user.actions";
 
-const Navbar = () => {
+const Navbar = async () => {
+    const user = await getUser();
+
     return (
-        <div className="navbar z-10 sticky top-0 bg-background">
+        <div className="navbar z-50 sticky top-0 bg-background">
             <nav className="container text-[13px] h-full flex justify-between">
                 <div className="nav_left flex items-center ">
                     <Link href="/">
@@ -30,19 +35,9 @@ const Navbar = () => {
                     </Link>
 
                     <Separator className="mx-4" orientation="vertical" />
-                    {/* <div className="create w-fit">
-                        <Link href="/manage/create">
-                            <Button
-                                size="sm"
-                                className="lg:text-xs !text-white font-light !bg-sky-600"
-                            >
-                                Create
-                            </Button>
-                        </Link>
-                    </div> */}
                 </div>
                 <div className="nav_right flex items-center">
-                    <div className="relative">
+                    <div className="relative max-sm:hidden">
                         <Input
                             type="text"
                             className="!bg-input min-w-72"
@@ -52,11 +47,14 @@ const Navbar = () => {
                         <X className="absolute right-2 top-[50%] -translate-y-1/2 w-[18px] h-[18px]" />
                     </div>
 
-                    <Separator className="mx-4" orientation="vertical" />
+                    <Separator
+                        className="mx-4 max-sm:hidden"
+                        orientation="vertical"
+                    />
 
                     <div className="notification flex h-full gap-4 items-center">
                         <Link href="/inbox">
-                            <div className="bg-input p-[7px] rounded-sm">
+                            <div className="bg-input p-[7px] rounded-sm relative">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -71,6 +69,7 @@ const Navbar = () => {
                                         d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
                                     />
                                 </svg>
+                                <MessageCount user={user} />
                             </div>
                         </Link>
 
@@ -94,9 +93,10 @@ const Navbar = () => {
                         </div>
                     </div>
                     <Separator className="mx-4" orientation="vertical" />
-                    <Suspense fallback={<p>Loading user...</p>}>
-                        <Profile />
-                    </Suspense>
+                    {/* <Suspense fallback={<p>Loading user...</p>}> */}
+                    <Profile user={user} />
+                    {/* </Suspense> */}
+                    <ViewAllStoresDialog />
                 </div>
             </nav>
         </div>

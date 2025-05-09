@@ -15,6 +15,7 @@ const config: Config = {
                 lg: "991px",
                 // => @media (min-width: 922px) { ... }
                 md: "822px",
+                xs: "530px",
             },
             colors: {
                 background: "hsl(var(--background))",

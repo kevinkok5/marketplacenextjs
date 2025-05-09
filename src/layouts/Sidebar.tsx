@@ -102,7 +102,7 @@ const Sidebar = () => {
                     <div className="text-sm pl-8 ">
                         <div className="flex flex-wrap py-1">
                             <Badge
-                                className="rounded-sm text-[13px] font-light flex gap-2 justify-between"
+                                className="rounded-sm text-xs flex gap-2 justify-between"
                                 variant="outline"
                             >
                                 label
@@ -132,16 +132,16 @@ const Sidebar = () => {
                 >
                     <div className="text-sm ">
                         <ul className="">
-                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light">
+                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-medium">
                                 Category name
                             </li>
-                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light">
+                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-medium">
                                 Category name
                             </li>
-                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light">
+                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-medium">
                                 Category name
                             </li>
-                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-light">
+                            <li className="pl-8 py-3 rounded-sm items-center transition duration-200 ease-out hover:bg-input font-medium">
                                 Category name
                             </li>
                         </ul>

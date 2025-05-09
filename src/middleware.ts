@@ -11,7 +11,7 @@ export default async function middleware(req: NextRequest) {
     if (notProtectedRoutes.includes(currentPath)) {
         return NextResponse.next();
     }
-    const cookie = cookies().get("session")?.value;
+    const cookie = (await cookies()).get("session")?.value;
     const session = cookie ? await decrypt(cookie) : null;
     // console.log(session);
 

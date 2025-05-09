@@ -150,27 +150,29 @@ const ItemForm = (data: ItemFormEditProps) => {
 
     return (
         <>
-            <div className="min-w-60 w-[368px]  border ">
-                <UploadImage
-                    files={files}
-                    setFiles={setFiles}
-                    errors={filesErrors}
-                    setErrors={setFilesErrors}
-                />
+            <div>
+                <div className="sm:min-w-60 sm:w-[368px] border ">
+                    <UploadImage
+                        files={files}
+                        setFiles={setFiles}
+                        errors={filesErrors}
+                        setErrors={setFilesErrors}
+                    />
+                </div>
             </div>
-            <div className="grow flex flex-col gap-4 p-4 overflow-y-auto">
+            <div className="grow flex flex-col gap-4 sm:p-4 sm:first-line:overflow-y-auto">
                 <Form {...form}>
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
                             form.handleSubmit(onSubmit)();
                         }}
-                        className="space-y-6"
+                        className="sm:space-y-6"
                     >
-                        <div className="flex  justify-between">
+                        <div className="flex justify-between ">
                             <div></div>
                             <button
-                                className="cursor-pointer text-blue-700"
+                                className="cursor-pointer dark:text-blue-400 text-blue-700"
                                 onClick={() => {
                                     setCreateSchemaProps({
                                         type: productType,
@@ -183,7 +185,7 @@ const ItemForm = (data: ItemFormEditProps) => {
                             </button>
                         </div>
 
-                        <div className="overflow-auto h-[310px] flex flex-col gap-4 pr-4">
+                        <div className="overflow-auto sm:h-[310px] flex flex-col gap-4 sm:pr-4">
                             <h3>Required</h3>
                             <ItemFormInput
                                 control={form.control}
@@ -228,7 +230,7 @@ const ItemForm = (data: ItemFormEditProps) => {
                             />
                         </div>
 
-                        <div className="flex justify-end items-center absolute h-[8vh] border border-t-neutral-600 bottom-0 w-full overflow-hidden px-8 -translate-x-[472px]">
+                        <div className="flex justify-end items-center sm:absolute h-[8vh] sm:*:border sm:border-t-neutral-600 bottom-0 w-full overflow-hidden sm:px-8 sm:-translate-x-[472px] max-sm:mt-4">
                             <Button
                                 onClick={() => {
                                     setCreateSchemaProps({

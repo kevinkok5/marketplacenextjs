@@ -14,8 +14,8 @@ import Link from "next/link";
 
 const Page = () => {
     return (
-        <section className="w-full min-h-full columns-3 gap-4 overflow-x-auto px-8 py-12">
-            <div className="break-inside-avoid gap-8 flex flex-col mb-4 border px-4 py-6 bg-neutral-950 border-neutral-800 h-fit min-w-[18rem] max-w-full rounded-2xl">
+        <section className="w-full min-h-full md:columns-3 gap-4 md:overflow-x-auto sm:px-8 px-4 py-12">
+            <div className="break-inside-avoid gap-8 flex flex-col mb-4 border px-4 py-6 dark:bg-neutral-950 bg-neutral-50 dark:border-neutral-800 border-neutral-200 h-fit min-w-[18rem] max-w-full rounded-2xl">
                 <CardTitle>Latest Product Performance</CardTitle>
                 <LinearChart />
                 <div>
@@ -24,20 +24,20 @@ const Page = () => {
                         In the past 7 days
                     </CardDescription>
                     <ul className="flex flex-col gap-4">
-                        <li className="w-full grid gap-3 grid-flow-col">
-                            <div className="flex gap-3">
-                                <div className="w-14 h-10">
+                        <li className="w-full">
+                            <div className="flex gap-2">
+                                <div className="w-[40%] aspect-[1/0.7]">
                                     <Image
                                         width={60}
                                         height={60}
-                                        src=""
+                                        src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
                                 </div>
 
-                                <div>
-                                    <p className="truncate w-[70%] pb-1 capitalize text-sm">
+                                <div className="flex-grow overflow-hidden">
+                                    <p className="truncate w-full pb-1 capitalize text-sm">
                                         Title falksdjf alksjfd alsdkjf alskdjf
                                         asldfkjasldkfj aslfd
                                     </p>
@@ -58,20 +58,20 @@ const Page = () => {
                                 </div>
                             </div>
                         </li>
-                        <li className="w-full grid gap-3 grid-flow-col">
-                            <div className="flex gap-3">
-                                <div className="w-14 h-10">
+                        <li className="w-full">
+                            <div className="flex gap-2">
+                                <div className="w-[40%] aspect-[1/0.7]">
                                     <Image
                                         width={60}
                                         height={60}
-                                        src=""
+                                        src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
                                 </div>
 
-                                <div>
-                                    <p className="truncate w-[70%] pb-1 capitalize text-sm">
+                                <div className="flex-grow overflow-hidden">
+                                    <p className="truncate w-full pb-1 capitalize text-sm">
                                         Title falksdjf alksjfd alsdkjf alskdjf
                                         asldfkjasldkfj aslfd
                                     </p>
@@ -92,20 +92,20 @@ const Page = () => {
                                 </div>
                             </div>
                         </li>
-                        <li className="w-full grid gap-3 grid-flow-col">
-                            <div className="flex gap-3">
-                                <div className="w-14 h-10">
+                        <li className="w-full">
+                            <div className="flex gap-2">
+                                <div className="w-[40%] aspect-[1/0.7]">
                                     <Image
                                         width={60}
                                         height={60}
-                                        src=""
+                                        src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                         alt="@shadcn"
                                         className="w-full h-full object-cover rounded-sm"
                                     />
                                 </div>
 
-                                <div>
-                                    <p className="truncate w-[70%] pb-1 capitalize text-sm">
+                                <div className="flex-grow overflow-hidden">
+                                    <p className="truncate w-full pb-1 capitalize text-sm">
                                         Title falksdjf alksjfd alsdkjf alskdjf
                                         asldfkjasldkfj aslfd
                                     </p>
@@ -134,7 +134,7 @@ const Page = () => {
                     </Link>
                 </div>
             </div>
-            <div className="break-inside-avoid flex flex-col mb-4 gap-8 border px-4 py-6 bg-neutral-950 border-neutral-800 h-fit  min-w-[18rem] max-w-full rounded-2xl">
+            <div className="break-inside-avoid flex flex-col mb-4 gap-8 border px-4 py-6 dark:bg-neutral-950 bg-neutral-50 dark:border-neutral-800 border-neutral-200 h-fit  min-w-[18rem] max-w-full rounded-2xl">
                 <CardTitle>Shop Analytics</CardTitle>
 
                 <div className="flex gap-2 flex-col">
@@ -193,12 +193,12 @@ const Page = () => {
                     </ul>
                 </div>
             </div>
-            <div className="break-inside-avoid border mb-4 p-4 bg-neutral-950 border-neutral-800 h-fit  min-w-[18rem] max-w-full rounded-2xl">
+            <div className="break-inside-avoid border mb-4 p-4 dark:bg-neutral-950 bg-neutral-50 dark:border-neutral-800 border-neutral-200 h-fit  min-w-[18rem] max-w-full rounded-2xl">
                 <CardTitle>Lastest News</CardTitle>
                 <CardTitle>Lastest News</CardTitle>
                 <CardTitle>Lastest News</CardTitle>
             </div>
-            <div className="break-inside-avoid border mb-4 p-4 bg-neutral-950 border-neutral-800 h-fit  min-w-[18rem] max-w-full rounded-2xl">
+            <div className="break-inside-avoid border mb-4 p-4 dark:bg-neutral-950 bg-neutral-50 dark:border-neutral-800 border-neutral-200 h-fit  min-w-[18rem] max-w-full rounded-2xl">
                 <CardTitle className="pb-2">Recent Followers</CardTitle>
                 <CardDescription className="pb-4">Last 90 days</CardDescription>
 
@@ -287,7 +287,7 @@ const Page = () => {
                     </div>
                 </Link>
             </div>
-            <div className="break-inside-avoid border mb-4 p-4 bg-neutral-950 border-neutral-800 h-fit  min-w-[18rem] max-w-full rounded-2xl">
+            <div className="break-inside-avoid border mb-4 p-4 dark:bg-neutral-950 bg-neutral-50 dark:border-neutral-800 border-neutral-200 h-fit  min-w-[18rem] max-w-full rounded-2xl">
                 <CardTitle className="pb-2"> Last messages</CardTitle>
 
                 <CardDescription className="pb-4">
@@ -326,7 +326,7 @@ const Page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src=""
+                                src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                 alt="@shadcn"
                             />
                         </div>
@@ -334,7 +334,10 @@ const Page = () => {
                     <li className="w-full grid gap-3 grid-flow-col">
                         <div className="flex gap-3">
                             <Avatar className="w-8 h-8">
-                                <AvatarImage src="" alt="@shadcn" />
+                                <AvatarImage
+                                    src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
+                                    alt="@shadcn"
+                                />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
 
@@ -360,7 +363,7 @@ const Page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src=""
+                                src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                 alt="@shadcn"
                             />
                         </div>
@@ -368,7 +371,10 @@ const Page = () => {
                     <li className="w-full grid gap-3 grid-flow-col">
                         <div className="flex gap-3">
                             <Avatar className="w-8 h-8">
-                                <AvatarImage src="" alt="@shadcn" />
+                                <AvatarImage
+                                    src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
+                                    alt="@shadcn"
+                                />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
 
@@ -394,7 +400,7 @@ const Page = () => {
                             <Image
                                 width={60}
                                 height={60}
-                                src=""
+                                src="http://127.0.0.1:3000/_next/image?url=http%3A%2F%2F127.0.0.1%3A8000%2Fmedias%2Fproducts%2F8bbbea69-8583-4773-b6c9-e12608f29a7f%2Fmedias%2FWhatsApp_Image_2025-_rZGEErQ.45.22_c3a90215.jpg&w=1920&q=75"
                                 alt="@shadcn"
                             />
                         </div>

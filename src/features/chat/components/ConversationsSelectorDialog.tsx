@@ -12,6 +12,8 @@ import {
 import { allStores } from "@/features/manageStore/lib/utils";
 import { User } from "@/features/user/lib/utils";
 import { updateForAId } from "../lib/chat.actions";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ConversationsSelectorDialogProps = {
     stores: allStores;
@@ -22,7 +24,13 @@ const ConversationsSelectorDialog = ({
     stores,
     user,
 }: ConversationsSelectorDialogProps) => {
+    const queryClient = useQueryClient();
+
     const userId = user.id || "";
+    const params = useParams();
+    const { chat } = params;
+    const chatId =
+        typeof chat == "string" ? decodeURIComponent(chat) : undefined;
 
     const getCookie = (name: string) => {
         if (typeof document === "undefined") return null; // ✅ Prevents SSR error
@@ -42,8 +50,12 @@ const ConversationsSelectorDialog = ({
     }, [userId]);
 
     const handleSelect = async (newValue: string) => {
-        await updateForAId(newValue); // Call server action to update cookie + revalidate
+        console.log("chat param: ", chatId);
+        if (typeof chatId == "string") {
+            queryClient.removeQueries({ queryKey: ["chat"] });
+        }
 
+        await updateForAId(newValue, chatId); // Call server action to update cookie + revalidate
         setValue(newValue);
     };
 
@@ -55,17 +67,18 @@ const ConversationsSelectorDialog = ({
             <SelectContent>
                 <SelectGroup>
                     <SelectItem value={user?.id}>{user?.firstName}</SelectItem>
-                    {stores.edges.map(
-                        (store) =>
-                            store.node?.id && (
-                                <SelectItem
-                                    key={store.node.id}
-                                    value={store.node.id}
-                                >
-                                    {store.node.name}
-                                </SelectItem>
-                            )
-                    )}
+                    {stores &&
+                        stores.edges?.map(
+                            (store) =>
+                                store.node?.id && (
+                                    <SelectItem
+                                        key={store.node.id}
+                                        value={store.node.id}
+                                    >
+                                        {store.node?.name}
+                                    </SelectItem>
+                                )
+                        )}
                 </SelectGroup>
             </SelectContent>
         </Select>

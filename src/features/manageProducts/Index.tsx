@@ -17,7 +17,7 @@ const Index = () => {
     const products = data?.edges;
     if (isLoading) {
         return (
-            <div className="product-layout w-full py-6 px-8">
+            <div className="product-layout w-full py-6 md:px-8 sm:px-4 px-1">
                 <ProductcardSkeleton />
                 <ProductcardSkeleton />
                 <ProductcardSkeleton />
@@ -32,7 +32,7 @@ const Index = () => {
         return <div>error</div>;
     }
     return (
-        <div className="product-layout w-full py-6 px-8">
+        <div className="product-layout w-full py-6 md:px-8 sm:px-4 px-1">
             {products?.map((product, index) => {
                 if (!product || !product.node || !product.node.productType)
                     <></>;

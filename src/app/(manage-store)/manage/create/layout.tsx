@@ -8,9 +8,9 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <section className="absolute flex justify-center items-center top-0 left-0 flex-col min-h-screen w-screen z-[100]">
-            <section className="relative bg-input w-[70%] min-w-[968px] h-[80vh] rounded-lg overflow-Y-auto overflow-x-hidden flex flex-col">
-                <div className="flex justify-between grow items-center max-h-[8vh] border-b border-neutral-600 px-4">
+        <section className="absolute flex justify-center items-center top-0 left-0 flex-col min-h-screen w-screen z-[100] p-4">
+            <section className="relative bg-input w-full md:w-[70%] md:min-w-[808px] h-[80vh] rounded-lg overflow-Y-auto overflow-x-hidden flex flex-col">
+                <div className="sticky bg-input top-0 flex justify-between grow items-center max-h-[8vh] min-h-[8vh] border-b border-neutral-600 px-4">
                     <div className="flex gap-2 items-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

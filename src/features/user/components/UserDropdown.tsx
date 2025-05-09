@@ -24,13 +24,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ModeToggle } from "@/components/ModeToggle";
-import React from "react";
+import React, { Suspense } from "react";
 import LogoutDropdownItem from "./LogoutDropdownItem";
 import { User } from "../lib/utils";
 import Link from "next/link";
 import { getUserStore } from "@/features/manageStore/lib/actions/store.actions";
 import { allStores } from "@/features/manageStore/lib/utils";
 import StoresDropdownItems from "./StoresDropdownItems";
+import ViewAllStores from "./ViewAllStores";
 
 type UserDropdownProps = {
     user: User;
@@ -40,18 +41,20 @@ export function UserDropdown({ user }: UserDropdownProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div className="user rounded-sm flex gap-2 items-center hover:bg-neutral-800 p-1">
+                <div className="user rounded-sm flex gap-2 items-center p-1 cursor-pointer">
                     <Avatar className="h-7 w-7">
                         <AvatarImage
                             // src="https://github.com/shadcn.png"
                             alt="@shadcn"
                         />
-                        <AvatarFallback className="!bg-blue-500">
+                        <AvatarFallback className="!bg-blue-500 font-semibold text-white uppercase">
                             {user.firstName && user.firstName[0]}
                         </AvatarFallback>
                     </Avatar>
-                    <div className="flex items-center gap-2">
-                        <p className="capitalize">{user.firstName}</p>
+                    <div className="flex items-center gap-2 font-semibold">
+                        <p className="capitalize max-sm:hidden">
+                            {user.firstName}
+                        </p>
                         <ChevronDown
                             className="mt-[1px]"
                             size={15}
@@ -60,9 +63,9 @@ export function UserDropdown({ user }: UserDropdownProps) {
                     </div>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-60">
-                <div className="user rounded-sm flex flex-col gap-2 items-center py-5">
-                    <Avatar className="h-14 w-14 !bg-blue-700">
+            <DropdownMenuContent className="sm:w-60 w-[52vw]">
+                <div className="user rounded-sm flex flex-col gap-2 items-center sm:py-5 py-3 ">
+                    <Avatar className="h-14 w-14 !bg-blue-700 font-semibold text-white">
                         <AvatarImage
                             // src="https://github.com/shadcn.png"
                             alt="@shadcn"
@@ -71,11 +74,11 @@ export function UserDropdown({ user }: UserDropdownProps) {
                             {user.firstName?.split("", 1)}
                         </AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col items-center ">
+                    <div className="flex flex-col items-center font-semibold">
                         <p className="capitalize">
                             {user.firstName} {user.lastName}
                         </p>
-                        <span className="text-xs text-neutral-400">
+                        <span className="text-xs text-neutral-500 dark:text-neutral-400">
                             @{user.username}
                         </span>
                     </div>
@@ -122,11 +125,11 @@ export function UserDropdown({ user }: UserDropdownProps) {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem disabled>
+                {/* <DropdownMenuItem disabled>
                     <Cloud />
                     <span>API</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                </DropdownMenuItem> */}
+                {/* <DropdownMenuSeparator /> */}
                 <LogoutDropdownItem />
             </DropdownMenuContent>
         </DropdownMenu>
@@ -134,7 +137,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
 }
 
 type ItemProps = {
-    icon?: React.ReactElement;
+    icon?: React.ReactElement<any>;
     label: string;
     children?: React.ReactNode;
     // defaultValue?: string;
@@ -144,9 +147,9 @@ type ItemProps = {
 export const Item: React.FC<ItemProps> = ({ icon, label, children }) => {
     return (
         <DropdownMenuItem>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center font-medium">
                 {icon}
-                <span className="text-sm">{label}</span>
+                <span className="sm:text-[13px] text-sm">{label}</span>
             </div>
 
             {children}
@@ -159,7 +162,7 @@ type UserStores = {
 };
 
 const StoresDropdown: React.FC = async () => {
-    const stores: UserStores = await getUserStore();
+    const stores: UserStores = await getUserStore({ first: 5 });
 
     return (
         <DropdownMenuSub>
@@ -168,7 +171,9 @@ const StoresDropdown: React.FC = async () => {
                 // disabled
             >
                 <ChartNoAxesGantt size={20} strokeWidth={1.5} />
-                <span className="text-sm">Manage</span>
+                <span className="sm:text-[13px] text-sm font-medium">
+                    Manage
+                </span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
                 <DropdownMenuSubContent>
@@ -177,14 +182,7 @@ const StoresDropdown: React.FC = async () => {
                             storeEdges={stores.allUserStores.edges}
                         />
                     )}
-
-                    <Link href="/store">
-                        <div>
-                            <DropdownMenuItem className="flex gap-2">
-                                <span className="text-sm">View all</span>
-                            </DropdownMenuItem>
-                        </div>
-                    </Link>
+                    <ViewAllStores />
                 </DropdownMenuSubContent>
             </DropdownMenuPortal>
         </DropdownMenuSub>

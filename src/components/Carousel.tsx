@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 
@@ -12,7 +13,7 @@ interface ItemsPerBreakPoint {
 interface Controls {
     style?: React.CSSProperties;
     className?: string;
-    icon?: React.ReactElement;
+    icon?: React.ReactElement<any>;
 }
 
 // interfact const VisibleItems:
@@ -117,7 +118,7 @@ const Carousel: React.FC<CarouselProps> = ({
             setTranslateX(diff);
 
             if (containerRef.current) {
-                const threshold = containerRef.current.offsetWidth / 6; // 25% of the container width
+                const threshold = containerRef.current.offsetWidth / 10; // 25% of the container width
 
                 if (diff > threshold && activeItemIndex > 0) {
                     handlePrev();
@@ -212,11 +213,15 @@ const Carousel: React.FC<CarouselProps> = ({
                 disabled={itemsCount <= activeItemIndex + currrentVisibleItems}
                 style={next?.style}
                 className={cn(
-                    "absolute cursor-pointer border-none right-2 top-[40%] w-11 h-11 bg-slate-400 rounded-full grid place-items-center disabled:bg-slate-400 disabled:text-slate-500",
+                    "absolute cursor-pointer border-none right-2 top-[40%] w-10 h-10 bg-slate-200 dark:bg-slate-600 rounded-full grid place-items-center disabled:hidden",
                     next?.className
                 )}
             >
-                {next?.icon ? next.icon : "next"}
+                {next?.icon ? (
+                    next.icon
+                ) : (
+                    <ChevronRight strokeWidth={2.5} size={18} />
+                )}
             </button>
             <button
                 id="prev"
@@ -224,11 +229,15 @@ const Carousel: React.FC<CarouselProps> = ({
                 disabled={activeItemIndex <= 0}
                 style={prev?.style}
                 className={cn(
-                    "absolute cursor-pointer border-none left-2 top-[40%] w-11 h-11 bg-slate-400 rounded-full grid place-items-center disabled:bg-slate-400 disabled:text-slate-500",
+                    "absolute cursor-pointer border-none left-2 top-[40%] w-10 h-10 bg-slate-200 dark:bg-slate-600 rounded-full grid place-items-center disabled:hidden",
                     prev?.className
                 )}
             >
-                {prev?.icon ? prev.icon : "prev"}
+                {prev?.icon ? (
+                    prev.icon
+                ) : (
+                    <ChevronLeft strokeWidth={2.5} size={18} />
+                )}
             </button>
         </div>
     );

@@ -41,7 +41,7 @@ export const signIn = async (data: authProps) => {
     // console.log("worked");
 
     await createSession(token?.data);
-    redirect("/");
+    return { success: true };
 };
 
 export const signUp = async (data: authProps) => {
@@ -82,7 +82,7 @@ export const signUp = async (data: authProps) => {
         };
     }
     await createSession(token?.data);
-    redirect("/");
+    return { success: true };
 };
 
 export const signOut = async () => {
@@ -91,10 +91,14 @@ export const signOut = async () => {
         name: "Store-session",
     };
 
-    cookies().delete(cookie.name);
-    cookies().delete("forAId");
+    (await cookies()).delete(cookie.name);
+    (await cookies()).delete("forAId");
 
-    await deleteSession();
+    const result = await deleteSession();
+
+    if (result?.success) {
+        return { success: true };
+    }
     return {
         error: {
             message: "Logout Failed",

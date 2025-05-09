@@ -11,9 +11,10 @@ import {
     ProductCategoryType,
 } from "@/features/manageProducts/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { use } from "react";
 
-const Page = ({ params }: { params: { itemId: string } }) => {
+const Page = (props: { params: Promise<{ itemId: string }> }) => {
+    const params = use(props.params);
     const {
         data: category,
         error: categoryError,

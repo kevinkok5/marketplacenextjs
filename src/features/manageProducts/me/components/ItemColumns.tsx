@@ -69,36 +69,47 @@ export const ItemColumns: ColumnDef<any>[] = [
             const originalObj = row.original;
 
             return (
-                <div className="flex gap-4">
-                    <div className="w-28 h-20 rounded-sm aspect-square bg-gray-500 overflow-hidden">
+                <div className="flex gap-4 ">
+                    <div className="w-28 h-20 rounded-sm aspect-square bg-neutral-100 dark:bg-neutral-900 overflow-hidden flex justify-center items-center">
                         {originalObj?.product?.node?.medias?.edges !=
-                        undefined ? (
-                            <Image
-                                src={
-                                    originalObj?.product?.node?.medias?.edges[0]
-                                        ?.node
-                                        ? originalObj?.product?.node?.medias
-                                              ?.edges[0].node?.media
-                                            ? originalObj?.product?.node?.medias
-                                                  ?.edges[0].node?.media
-                                            : ""
-                                        : ""
-                                }
-                                alt={
-                                    originalObj?.product?.node?.name
-                                        ? `${originalObj?.product?.node?.name}-image`
-                                        : "image"
-                                }
-                                width={800}
-                                height={600}
-                                className="w-full h-full object-cover"
-                            />
+                            undefined &&
+                        originalObj?.product?.node?.medias?.edges[0]?.node ? (
+                            originalObj?.product?.node?.medias?.edges[0].node
+                                ?.media && (
+                                <Image
+                                    src={
+                                        originalObj?.product?.node?.medias
+                                            ?.edges[0].node?.media
+                                    }
+                                    alt={
+                                        originalObj?.product?.node?.name
+                                            ? `${originalObj?.product?.node?.name}-image`
+                                            : "image"
+                                    }
+                                    width={800}
+                                    height={600}
+                                    className="w-full h-full object-cover"
+                                />
+                            )
                         ) : (
-                            ""
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="size-8 text-black dark:text-white"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                                />
+                            </svg>
                         )}
                     </div>
                     <div className="flex flex-col gap-2 py-1">
-                        <p className="text-gray-400 text-xs">
+                        <p className="dark:text-gray-400 text-xs">
                             {originalObj?.product?.node?.availabilityStatus &&
                                 customCapitalize(
                                     originalObj?.product?.node
@@ -114,18 +125,18 @@ export const ItemColumns: ColumnDef<any>[] = [
                                 )[0]
                             }
                         </p>
-                        <ul className="flex justify-between w-40">
+                        <ul className="flex max-sm:flex-row-reverse justify-between w-40">
                             <li>
                                 <Link
                                     href={`/manage/edit/${originalObj?.product?.node?.id}${queryParam}`}
                                 >
-                                    <div className="p-2 rounded-lg hover:bg-neutral-700">
+                                    <div className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700">
                                         <Pen size={18} strokeWidth={1} />
                                     </div>
                                 </Link>
                             </li>
                             <li>
-                                <div className="p-2 rounded-lg hover:bg-neutral-700">
+                                <div className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700">
                                     <Eye size={18} strokeWidth={1} />
                                 </div>
                             </li>
@@ -139,7 +150,7 @@ export const ItemColumns: ColumnDef<any>[] = [
                                             <span className="sr-only">
                                                 Open menu
                                             </span>
-                                            <div className="p-2 rounded-lg hover:bg-neutral-700">
+                                            <div className="p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700">
                                                 <EllipsisVertical
                                                     size={18}
                                                     strokeWidth={1}
@@ -219,7 +230,11 @@ export const ItemColumns: ColumnDef<any>[] = [
         cell: ({ row }) => {
             const status = row.getValue("status");
             if (typeof status == "string") {
-                return customCapitalize(status);
+                return (
+                    <div className="font-medium">
+                        {customCapitalize(status)}
+                    </div>
+                );
             }
 
             // return <div className="text-right font-medium">{formatted}</div>;
@@ -249,7 +264,7 @@ export const ItemColumns: ColumnDef<any>[] = [
 
             // return <div className="text-right font-medium">{formatted}</div>;
             return (
-                <p className="max-w-40 pl-4 truncate">
+                <p className="max-w-40 pl-4 truncate font-medium">
                     {customCapitalize(name)}
                 </p>
             );
@@ -265,8 +280,8 @@ export const ItemColumns: ColumnDef<any>[] = [
                 style: "currency",
                 currency: "ZAR",
             }).format(amount);
-            // return <div className="text-right font-medium">{formatted}</div>;
-            return formatted;
+            return <div className="font-medium">{formatted}</div>;
+            // return formatted;
         },
     },
     {
@@ -277,7 +292,7 @@ export const ItemColumns: ColumnDef<any>[] = [
             if (!status) {
                 return (
                     <Button
-                        className="!bg-sky-600 !text-white text-xs capitalize"
+                        className="!bg-blue-600 !text-white text-xs capitalize"
                         disabled={true}
                     >
                         Mark as sold
@@ -287,19 +302,19 @@ export const ItemColumns: ColumnDef<any>[] = [
 
             if (customCapitalize(status) === "Published") {
                 return (
-                    <Button className="!bg-sky-600 !text-white text-xs capitalize hover:!bg-sky-500">
+                    <Button className="!bg-blue-600 !text-white text-xs capitalize dark:hover:!bg-blue-700 hover:!bg-blue-500">
                         Mark as sold
                     </Button>
                 );
             } else if (customCapitalize(status) === "Sold") {
                 return (
-                    <Button className="!bg-sky-600 !text-white text-xs capitalize">
+                    <Button className="!bg-blue-600 !text-white text-xs capitalize dark:hover:!bg-blue-700 hover:!bg-blue-500">
                         relist this item
                     </Button>
                 );
             } else if (customCapitalize(status) === "Draft") {
                 return (
-                    <Button className="!bg-sky-600 !text-white text-xs capitalize ho">
+                    <Button className="!bg-blue-600 !text-white text-xs capitalize dark:hover:!bg-blue-700 hover:!bg-blue-500">
                         continue editing
                     </Button>
                 );
@@ -307,7 +322,7 @@ export const ItemColumns: ColumnDef<any>[] = [
 
             return (
                 <Button
-                    className="!bg-sky-600 !text-white text-xs capitalize"
+                    className="!bg-sky-600 !text-white text-xs capitalize dark:hover:!bg-blue-700 hover:!bg-blue-500"
                     disabled={true}
                 >
                     Mark as sold

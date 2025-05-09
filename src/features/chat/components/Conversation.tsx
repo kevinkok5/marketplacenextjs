@@ -2,9 +2,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { type JSX } from "react";
 import { Conversation as ConversationType } from "../lib/utils";
 import { User } from "@/features/user/lib/utils";
+import {
+    HouseProduct,
+    isHouseProduct,
+    isItemProduct,
+    isVehicleProduct,
+    ItemProduct,
+    VehicleProduct,
+} from "@/features/manageProducts/lib/utils";
 
 type ConversationProps = {
     className?: string;
@@ -27,9 +35,9 @@ const Conversation = ({
     forAId,
 }: ConversationProps): JSX.Element => {
     const name =
-        forAId == conversation.client.id
-            ? conversation.store.name
-            : conversation.client.firstName;
+        forAId == conversation.client?.id
+            ? conversation.store?.name
+            : conversation.client?.firstName;
 
     return (
         <Link href={href}>
@@ -42,19 +50,37 @@ const Conversation = ({
                     className
                 )}
             >
-                <Avatar className="w-12 h-12">
-                    <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                    />
-                    <AvatarFallback className="!bg-green-400">
-                        CN
-                    </AvatarFallback>
-                </Avatar>
-                <div className="flex-grow  h-12 flex flex-col gap-1">
-                    <p className="text-base/[1.4] font-semibold">{name}</p>
-                    <small className="text-sm text-neutral-300">
-                        {conversation.messages.edges[0].node.content}
+                {conversation.product && (
+                    <Avatar className="w-12 h-12">
+                        {conversation?.product.medias?.edges != undefined &&
+                        conversation?.product.medias?.edges[0]
+                            ? conversation?.product.medias?.edges[0].node
+                                  ?.media && (
+                                  <AvatarImage
+                                      src={
+                                          conversation?.product.medias?.edges[0]
+                                              .node?.media
+                                      }
+                                      alt="product-image"
+                                  />
+                              )
+                            : ""}
+
+                        <AvatarFallback className="!bg-input">U</AvatarFallback>
+                    </Avatar>
+                )}
+                <div className="flex-grow  h-12 flex flex-col justify-between">
+                    <div>
+                        <ProductName product={conversation.product} />
+                        <p className="text-xs/[1] font-semibold dark:text-neutral-300">
+                            : {name}
+                        </p>
+                        {/* <p className="text-base/[1] font-semibold">{name}</p> */}
+                    </div>
+
+                    <small className="text-sm dark:text-neutral-300 text-neutral-700 line-clamp-1">
+                        {conversation.messages?.edges &&
+                            conversation.messages.edges[0]?.node.content}
                     </small>
                 </div>
 
@@ -62,6 +88,37 @@ const Conversation = ({
             </div>
         </Link>
     );
+};
+
+const ProductName = ({
+    product,
+}: {
+    product: ItemProduct | VehicleProduct | HouseProduct;
+}) => {
+    if (isItemProduct(product)) {
+        return (
+            <p className="text-sm/[1] font-semibold dark:text-neutral-300 line-clamp-1">
+                {product.name}
+            </p>
+        );
+    } else if (isVehicleProduct(product)) {
+        return (
+            <p className="text-sm/[1] font-semibold dark:text-neutral-300 line-clamp-1">
+                {product.make} {product.model} {product.year}
+            </p>
+        );
+    } else if (isHouseProduct(product)) {
+        return (
+            <p className="text-sm/[1] font-semibold dark:text-neutral-300 line-clamp-1">
+                {product.description}
+            </p>
+        );
+    } else
+        return (
+            <p className="text-sm/[1] font-semibold dark:text-neutral-300 line-clamp-1">
+                UNTITLED
+            </p>
+        );
 };
 
 export default Conversation;

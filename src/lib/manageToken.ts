@@ -45,16 +45,24 @@ export const refreshToken = async (
     }
 };
 
-export const isTokenExpired = async (token: string) => {
-    //this function is the same as the one in the utils package
-    const decodedToken: any = jwtDecode(token);
-    return dayjs.unix(decodedToken.exp).diff(dayjs()) < 1;
+export const isTokenExpired = async (token: string): Promise<boolean> => {
+    if (!token) return true; // If no token is provided, treat it as expired
+
+    try {
+        const decodedToken: any = jwtDecode(token);
+        if (!decodedToken.exp) return true; // If no expiration claim exists, treat it as expired
+
+        return dayjs.unix(decodedToken.exp).diff(dayjs()) < 1;
+    } catch (error) {
+        console.error("Error decoding token:", error);
+        return true; // If decoding fails, assume it's expired
+    }
 };
 
 export const getAccessToken = async () => {
     let accessToken: string | null = null;
 
-    const cookie = cookies().get("session")?.value;
+    const cookie = (await cookies()).get("session")?.value;
     // console.log("before: " + cookie);
     const session = await decrypt(cookie);
     if (session && session.token) {
@@ -76,7 +84,7 @@ export const getStoreSession = async () => {
 
     let storeId: string | null = null;
 
-    const cookie = cookies().get("Store-session")?.value;
+    const cookie = (await cookies()).get("Store-session")?.value;
 
     const session = await decryptStore(cookie);
     if (session && session.token?.token) {

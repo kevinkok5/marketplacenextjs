@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/contexts/theme-provider";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
@@ -33,6 +33,9 @@ export const metadata: Metadata = {
 //     NProgress.done();
 //     NProgress.remove();
 // });
+// export const viewport: Viewport = {
+//     viewportFit: "cover",
+// };
 
 export default function RootLayout({
     children,
@@ -41,7 +44,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.variable} ${ibmPlexSerif.variable}`}>
+            {/* <head>
+                <meta name="viewport" content="viewport-fit=cover" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                />
+            </head> */}
+            <body
+                className={`${inter.variable} ${ibmPlexSerif.variable}`}
+                suppressHydrationWarning
+            >
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"

@@ -2,9 +2,10 @@ import { getUser } from "@/features/user/lib/actions/user.actions";
 import Link from "next/link";
 import React from "react";
 import { UserDropdown } from "./components/UserDropdown";
+import { User } from "./lib/utils";
 
-const Profile = async () => {
-    const user = await getUser();
+const Profile = async ({ user }: { user: User }) => {
+    // const user = await getUser();
 
     if (!user) {
         return (

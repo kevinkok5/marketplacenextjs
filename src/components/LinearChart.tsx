@@ -35,7 +35,7 @@ const chartConfig = {
 
 export function LinearChart() {
     return (
-        <Card className="border !border-neutral-700 !bg-neutral-900">
+        <Card className="border dark:bg-neutral-900 bg-neutral-100 dark:border-neutral-700 border-neutral-2=300">
             <CardHeader>
                 {/* <CardTitle>Latest Product Performance</CardTitle> */}
                 <CardDescription>For the past 7 days</CardDescription>

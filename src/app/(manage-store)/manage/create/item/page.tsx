@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const Page = () => {
-    // const { itemId: id } = params;
     const {
         data: category,
         error,
@@ -28,11 +27,11 @@ const Page = () => {
     if (isLoading) return <>loading...</>;
     if (error) return <>error...</>;
     return (
-        <div>
-            <section className="flex grow p-12 gap-10">
-                {category && <ItemForm data={category} />}
-            </section>
-        </div>
+        // <div>
+        <section className="flex max-sm:flex-col grow sm:p-12 p-4 gap-10">
+            {category && <ItemForm data={category} />}
+        </section>
+        // {/* </div> */}
     );
 };
 

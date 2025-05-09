@@ -11,6 +11,7 @@ import {
 import { z } from "zod";
 import { createStoreSchema } from "../utils";
 import { apiData } from "@/lib/utils";
+import { createGraphQLClient } from "@/lib/graphqlClient";
 
 export const join = async () => {
     try {
@@ -139,7 +140,9 @@ export const createUserStore = async (
     return JSON.parse(JSON.stringify(apiData));
 };
 
-export const getUserStore = async () => {
+export const getUserStore = async (
+    queryParams?: Record<string, string | number>
+) => {
     try {
         await verifySession();
         const apolloClient = initializeApollo();
@@ -147,6 +150,7 @@ export const getUserStore = async () => {
         const { data } = await apolloClient.query({
             query: GET_ALL_USER_STORE,
             fetchPolicy: "network-only", // Ensures fresh data
+            variables: { ...queryParams },
         });
 
         if (!data || !data.allUserStores) {
@@ -182,4 +186,43 @@ export const getUserStore = async () => {
             };
         }
     }
+};
+
+export const getUserStores_reactQuery = async (
+    queryParams?: Record<string, string | number>
+) => {
+    const graphqlClient = await createGraphQLClient(); // Wait for the client to be created with the token
+
+    let apiData: apiData = {
+        data: [],
+        errors: "null",
+    };
+    const variables = { ...queryParams };
+
+    try {
+        await verifySession();
+
+        const response: any = await graphqlClient.request(
+            GET_ALL_USER_STORE,
+            variables
+        );
+
+        if (!response || !response.allUserStores) {
+            throw new Error("User data not found");
+        }
+        apiData = {
+            data: response,
+            errors: null,
+        };
+    } catch (error) {
+        apiData = {
+            data: [],
+            errors: {
+                message: "Oops, Something went wrong",
+                error: error || "GraphQL Error",
+                success: false,
+            },
+        };
+    }
+    return apiData;
 };

@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { getAccessToken, getStoreSession } from "./manageToken";
 
-const endpoint = "http://127.0.0.1:8000/api/graphql/";
+const endpoint = process.env.NEXT_PUBLIC_API_BASE_GRAPHQL_URL || "";
 export const createGraphQLClient = async () => {
     const token = await getAccessToken();
     const storeId = await getStoreSession();

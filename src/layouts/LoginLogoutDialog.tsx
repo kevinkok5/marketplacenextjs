@@ -72,7 +72,9 @@ const LoginLogoutDialog = ({
         try {
             const result = await authOperation(userData);
             // console.log("result:", result);
-            if (result?.errors) {
+            if (result?.success) {
+                router.push("/"); // Use client-side navigation
+            } else if (result?.errors) {
                 if ("message" in result.errors) {
                     toast({
                         variant: "destructive",
@@ -80,10 +82,9 @@ const LoginLogoutDialog = ({
                         description: result.errors.message,
                     });
                 }
-            } else {
-                console.log("login successful");
             }
         } catch (error) {
+            console.log("error: ", error);
             toast({
                 variant: "destructive",
                 className: "font-bold",

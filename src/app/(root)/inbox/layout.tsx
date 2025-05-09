@@ -9,14 +9,13 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="flex flex-col min-h-dvh">
-            <Navbar />
-            <section className="flex flex-grow">
+        <section className="max-h-[calc(100dvh-48px)] flex flex-col h-[calc(100dvh-48px)] overflow-y-scroll">
+            <div className="flex flex-grow">
                 <Suspense>
-                    <ChatSidebar />
+                    <ChatSidebar className="max-md:hidden" />
                 </Suspense>
                 {children}
-            </section>
-        </main>
+            </div>
+        </section>
     );
 }

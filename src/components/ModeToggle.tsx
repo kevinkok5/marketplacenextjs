@@ -20,7 +20,9 @@ export function ModeToggle() {
             <DropdownMenuSub>
                 <DropdownMenuSubTrigger className="flex gap-3">
                     <SunMoon size={20} strokeWidth={1.5} />
-                    <span className="text-sm">Theme</span>
+                    <span className="sm:text-[13px] text-sm font-medium">
+                        Theme
+                    </span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                     <DropdownMenuSubContent>

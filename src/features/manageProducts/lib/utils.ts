@@ -301,12 +301,18 @@ export const createFormSchema = ({ type, status }: CreateFormSchemaProps) => {
 //     // ...
 // ];
 
-export const isItemProduct = (data: any): data is ItemProduct => {
-    return data.productType === "ITEM";
+export const isItemProduct = (data: {
+    productType: string;
+}): data is ItemProduct => {
+    return data?.productType?.toUpperCase() === "ITEM";
 };
-export const isVehicleProduct = (data: any): data is ItemProduct => {
-    return data.productType === "VEHICLE";
+export const isVehicleProduct = (data: {
+    productType: string;
+}): data is VehicleProduct => {
+    return data?.productType?.toUpperCase() === "VEHICLE";
 };
-export const isHouseProduct = (data: any): data is ItemProduct => {
-    return data.productType === "HOUSE";
+export const isHouseProduct = (data: {
+    productType: string;
+}): data is HouseProduct => {
+    return data?.productType?.toUpperCase() === "HOUSE";
 };

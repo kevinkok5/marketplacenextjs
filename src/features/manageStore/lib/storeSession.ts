@@ -6,16 +6,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { StorePayload } from "./utils";
 
-// export interface tokenSession {
-//     token?: {
-//         refresh: string;
-//         access: string;
-//     };
-//     expires?: string;
-//     iat: number; // Issued at time in seconds
-//     exp: number; // Expiration time in seconds
-// }
-
+// const isDev = process.env.NODE_ENV !== "production";
+const isDev = true;
 export interface storeTokenSession {
     token?: StorePayload;
 }
@@ -51,9 +43,9 @@ export const createStoreSession = async (token: JWTPayload | undefined) => {
     const cookie = {
         name: "Store-session",
         options: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax" as const, // Ensure this is 'strict' | 'lax' | 'none'
+            httpOnly: !isDev, // Disable only in dev
+            secure: !isDev, // Secure only in prod
+            sameSite: isDev ? ("lax" as const) : ("strict" as const),
             path: "/",
         },
         duration: 1000 * 60 * 60 * 24 * 90,
@@ -64,24 +56,29 @@ export const createStoreSession = async (token: JWTPayload | undefined) => {
     // console.log("after: " + session);
 
     // console.log("session created");
+    const awaitedCookie = await cookies(); // Await cookies() first
 
-    cookies().set(cookie.name, session, { ...cookie.options, expires });
-    redirect("/manage");
+    awaitedCookie.set(cookie.name, session, { ...cookie.options, expires });
+    // redirect("/manage");
+    return { success: true };
 };
 
 export const verifyStoreSession = async (): Promise<StoreTokenPayload> => {
     const cookie = {
         name: "Store-session",
         options: {
-            httpOnly: true,
-            secure: true,
-            sameSite: "lax" as const, // Ensure this is 'strict' | 'lax' | 'none'
+            httpOnly: !isDev, // Disable only in dev
+            secure: !isDev, // Secure only in prod
+            sameSite: isDev ? "lax" : "strict",
             path: "/",
         },
         duration: 1000 * 60 * 60 * 24 * 21,
     };
 
-    const storedCookie = cookies().get(cookie.name)?.value;
+    const awaitedCookie = await cookies(); // Await cookies() first
+
+    const storedCookie = awaitedCookie.get(cookie.name)?.value;
+    console.log("store cookie: " + storedCookie);
     if (!storedCookie) redirect("/store");
     const session = await decryptStore(storedCookie);
     if (!session?.token) redirect("/store");
@@ -94,6 +91,8 @@ export const deleteStoreSession = async () => {
         name: "Store-session",
     };
 
-    cookies().delete(cookie.name);
+    const awaitedCookie = await cookies(); // Await cookies() first
+
+    awaitedCookie.delete(cookie.name);
     redirect("/store");
 };

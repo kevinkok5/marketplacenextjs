@@ -80,7 +80,7 @@ export default async function ListingResolver() {
 
     return (
         <Tabs defaultValue="item" className="w-full">
-            <TabsList className="h-20 w-full border-b border-neutral-600 rounded-none  justify-start items-end sticky top-12 z-10">
+            <TabsList className="h-20 w-full sm:px-4 border-b border-neutral-300 dark:border-neutral-600 rounded-none justify-start items-end sticky -top-[1px] z-10">
                 <TabsTrigger className="px-14" value="item">
                     Item
                 </TabsTrigger>
@@ -88,7 +88,7 @@ export default async function ListingResolver() {
                     Vehicle
                 </TabsTrigger>
             </TabsList>
-            <TabsContent value="item">
+            <TabsContent value="item" className="md">
                 <ItemListing itemsData={itemsData} />
             </TabsContent>
             <TabsContent value="vehicle">
